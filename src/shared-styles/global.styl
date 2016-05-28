@@ -1,0 +1,40 @@
+// 
+// Global styles
+// 
+
+// These styles are imported by the top level app component
+
+// ------------------------------------------------------------------------------
+// Reset CSS 
+// ------------------------------------------------------------------------------
+
+// !!! 
+// Used as a sanity check to identify and exclude user agent stylesheet quirks/interference
+// This should be comented out in prod build.
+// The identified issues should be turned into rules overriding the UA set CSS, if necessary, and included in this file
+// !!!
+
+// @import '~shared-styles/reset.styl'
+
+// ------------------------------------------------------------------------------
+// Import custom fonts
+// ------------------------------------------------------------------------------
+// @import '~shared-styles/fonts.styl'
+
+// ------------------------------------------------------------------------------
+// Global styles / UA overrides ( read reset 'RSS note' )
+// ------------------------------------------------------------------------------
+
+body
+  // Font Setup
+  // font-family 'Droid Sans', sans-serif
+  
+  // Chrome UA override 
+  margin 0
+
+// Set border box as default for all DOM elements
+*, *:after, *:before
+  box-sizing border-box
+
+
+
