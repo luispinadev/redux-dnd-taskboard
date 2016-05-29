@@ -7,7 +7,7 @@ export default handleActions({
   [CARD_CREATE]: (state, { payload }) =>
     state.updateIn([payload.boardID], l => 
       payload.hasOwnProperty('index') ? 
-        l.insert(payload.index, payload.id) : l.push(payload.id)
+        l.insert(payload.index, payload.id) : l.unshift(payload.id)
     ),
   [CARD_DELETE]: (state, { payload }) =>
     state.updateIn([payload.boardID], l => 

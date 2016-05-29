@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 
 import styles from './Card.styl'
+import ControlledInput from 'views/components/ControlledInput'
 
-const Card = ({ text, onEdit, onSave, onCancel, isEditing, inputText, onInputChange, onDelete }) => {
+export default ({ text, onEdit, onSave, onCancel, isEditing, setInputText, onDelete }) => {
   return (
     <div className={styles.wrapper}> {/* indented at same level because it's just a style wrapper */}
       { !isEditing ?
@@ -15,11 +16,10 @@ const Card = ({ text, onEdit, onSave, onCancel, isEditing, inputText, onInputCha
           </div>
           :
           <div className={styles.container} >
-            <input type="text" placeholder="write here"
-              className={styles.text}
-              value={inputText}
-              onChange={ onInputChange }
-            />          
+            <ControlledInput className={styles.text} placeholder="write here"
+              initVal={text}
+              changeHandler={setInputText} 
+            />
             <div className={styles.controlsBlock} >
               <i title="save" className={`fa fa-check ${styles.icon}`} onClick={onSave} />
               <i title="cancel" className={`fa fa-times ${styles.icon}`} onClick={onCancel} />
@@ -30,16 +30,3 @@ const Card = ({ text, onEdit, onSave, onCancel, isEditing, inputText, onInputCha
     </div>
   )
 }
-
-Card.propTypes = {
-  cardID: PropTypes.string,
-  text: PropTypes.string.isRequired
-  // isSelected: PropTypes.bool.isRequired,
-  // isDragging: PropTypes.bool.isRequired,
-  // isPreview: PropTypes.bool.isRequired,
-  // isFirst: PropTypes.bool.isRequired,
-  // onToggleCard: PropTypes.func.isRequired,
-}
-
-export default Card
-

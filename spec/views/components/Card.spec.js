@@ -1,9 +1,11 @@
+
 import React from 'react'
 import { shallow } from 'enzyme'
 // import { List } from 'immutable'
 
-import Card from 'views/components/Card/Card'
 import styles from 'views/components/Card/Card.styl'
+import Card from 'views/components/Card/Card'
+import ControlledInput from 'views/components/ControlledInput'
 
 describe('Components:: Card', function(){
   const props = { 
@@ -17,7 +19,7 @@ describe('Components:: Card', function(){
     onEdit: f => f,
     onSave: f => f,
     onCancel: f => f,
-    onInputChange: f => f,
+    setInputText: f => f,
     inputText: 'Lorem to the ipsum',
     onDelete: f => f
   }
@@ -55,6 +57,11 @@ describe('Components:: Card', function(){
 
   describe('Edit text process', function(){
 
+    it('renders a ControlledInput when "isEditing" is true', function(){
+      const wrapper = shallow(<Card {...props} isEditing={true} />)
+      expect( wrapper.find(ControlledInput) ).to.have.length(1)
+    })
+
     it('"onEdit" is called when edit button is clicked', function(){
       const handler = sinon.spy()
       const wrapper = shallow(<Card {...props} onEdit={handler}/>)
@@ -63,13 +70,6 @@ describe('Components:: Card', function(){
       expect( handler.called ).to.be.true
     })
 
-    it('"onInputChange" is called when edit button is clicked', function(){
-      const handler = sinon.spy()
-      const wrapper = shallow(<Card {...props} isEditing={true} onInputChange={handler}/>)
-      wrapper.find('input').simulate('change')
-
-      expect( handler.called ).to.be.true
-    })
 
     it('"onSave" is called when save button is clicked while editing', function(){
       const handler = sinon.spy()

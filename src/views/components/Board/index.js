@@ -14,7 +14,7 @@ export default compose(
       title: state.get('boards').get(props.boardID).get('title')
     }),
     (dispatch, props) => ({
-      createCard: () => dispatch( createCard({ boardID: props.boardID }) )
+      createCard: (text) => dispatch( createCard({ boardID: props.boardID, text }) )
     })
   ),
  

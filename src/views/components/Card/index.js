@@ -21,7 +21,7 @@ export default compose(
   ),
 
   withState('isEditing', 'setEditStatus', false),
-  withState('inputText', 'setInputText', (props) => props.text),
+  withState('inputText', 'setInputText', props => props.text),
   
   mapProps(({ setEditStatus, setInputText, ...rest }) => ({
     startEdit: () => setEditStatus(true),
@@ -43,10 +43,6 @@ export default compose(
       props.stopEdit()
       props.setInputText(props.text)
     },
-    onInputChange: props => e => {
-      // e.persist()
-      props.setInputText(e.target.value)
-    },
     onDelete: props => () => {
       props.deleteCard(props.cardID)
     }
@@ -55,24 +51,23 @@ export default compose(
   pure,
 
   setPropTypes({
-    cardID: PropTypes.string.isRequired,
-    deleteCard: PropTypes.func.isRequired,
-    // boardID: PropTypes.string.isRequired,
+    cardID: PropTypes.string, // .isRequired,
+    deleteCard: PropTypes.func, // .isRequired,
     // Injected by mapProps
-    startEdit: PropTypes.func.isRequired,
-    stopEdit: PropTypes.func.isRequired,
+    startEdit: PropTypes.func, // .isRequired,
+    stopEdit: PropTypes.func, // .isRequired,
+    setInputText: PropTypes.func.isRequired,
     // Injected by withState
     isEditing: PropTypes.bool.isRequired,
+    inputText: PropTypes.string, // .isRequired,
     // Injected by withHandlers
-    onEdit: PropTypes.func.isRequired,
+    onEdit: PropTypes.func, // .isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
-    onInputChange: PropTypes.func.isRequired,
-    inputText: PropTypes.string.isRequired,
-    onDelete: PropTypes.func.isRequired,
+    onDelete: PropTypes.func, // .isRequired,
     // Injected by Redux
     text: PropTypes.string.isRequired,
-    setText: PropTypes.func.isRequired
+    setText: PropTypes.func, // .isRequired
   })
 
 )(Card)

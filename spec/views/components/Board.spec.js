@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 // import { List } from 'immutable'
 
 import Board from 'views/components/Board/Board'
+import CreateCardControl from 'views/components/CreateCardControl'
 import styles from 'views/components/Board/Board.styl'
 
 describe('Components:: Board', function(){
@@ -31,12 +32,9 @@ describe('Components:: Board', function(){
     expect( wrapper.find('.'+styles.cardsBlock) ).to.have.length(1)
   })
 
-  it('renders a clickable "add card" control', function(){
-    const handler = sinon.spy()
-    const wrapper = shallow(<Board {...props} createCard={handler} />)
-    wrapper.find('.'+styles.newButton).simulate('click')
-
-    expect( handler.called ).to.be.true
+  it('renders an "add card" control', function(){
+    const wrapper = shallow(<Board {...props} />)
+    expect( wrapper.find(CreateCardControl) ).to.have.length(1)
   })
 
 })
