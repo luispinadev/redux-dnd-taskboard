@@ -1,7 +1,8 @@
 @import '~shared-styles/consts.styl'
 
-// $card-height = 50px
-$card-bg-color = #F9F9F9
+$card-height = 14px
+$card-bg-color = #FBFBFB
+$card-border-color = #AAF9AA
 $card-selected-bg-color = #FFFFFF
 $card-disabledOpacity = 0.3
 $card-draggedOpacity = 0.3
@@ -15,9 +16,10 @@ $card-preview-border-col = #716E6E
   padding $global-v-board-padding $global-h-board-padding 0 $global-h-board-padding
 .container
   position relative
-  min-height 20px
+  min-height $card-height
   color $global-c-grey-text
-  // line-height $card-height
+  border solid 1px $card-border-color
+  line-height $card-height
   background-color $card-bg-color
   cursor pointer
   &:active
@@ -54,21 +56,23 @@ $card-preview-border-col = #716E6E
   position absolute
   top 0
   right 0
-  font-size 14px
-  :hover
-    width 20px
-    background-color red
+  bottom 0
+
+  // :hover
+  //   width 40px
+  //   background-color red
 // .disabledIcon
 //   padding 5px
 //   color $global-c-icon-inactive
 //   cursor default
 
 .icon
-  padding 5px
+  padding 0 5px 0 0
   cursor pointer
+  font-size 12px
   color $global-c-icon-inactive
-  &:hover
-    text-shadow 0 0 10px #5BE414
+  // &:hover
+  //   text-shadow 0 0 10px #5BE414
   &:active
     color $global-c-icon-active !important
 

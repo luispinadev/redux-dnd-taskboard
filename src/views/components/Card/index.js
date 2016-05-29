@@ -15,7 +15,7 @@ export default compose(
     (dispatch, props) => ({
       setText: (text) => {
         if (props.isEditing) props.editDone()
-        dispatch( editCard({ cardID: props.cardID, text }) )
+        dispatch( editCard({ id: props.cardID, text }) )
       }
       // deleteCard: (text) => {
       //   dispatch( deleteCard({ id: props.cardID, boardID: props.boardID }) )
@@ -24,25 +24,33 @@ export default compose(
   ),
 
   withState('isEditing', 'setEditStatus', false),
+  withState('inputText', 'setInputText', (props) => props.text),
   
-  mapProps(({ setEditStatus, ...rest }) => ({
+  mapProps(({ setEditStatus, setInputText, ...rest }) => ({
     startEdit: () => setEditStatus(true),
     stopEdit: () => setEditStatus(false),
+    setInputText: text => setInputText(text),
     ...rest
   })),
 
   withHandlers({
-    onEdit: props => event => {
+    onEdit: props => () => {
       props.startEdit()
+      // focus input ?
     },
-    onSave: props => val => {
-      props.setText(val)
+    onSave: props => () => {
+      props.setText(props.inputText)
       props.stopEdit()
     },
-    onCancel: props => event => {
+    onCancel: props => () => {
       props.stopEdit()
-    }
-    // onDelete: props => event => {
+      props.setInputText(props.text)
+    },
+    onInputChange: props => e => {
+      // e.persist()
+      props.setInputText(e.target.value)
+    },
+    // onDelete: props => () => {
     //   props.deleteCard()
     // }
   }),
@@ -51,7 +59,7 @@ export default compose(
 
   setPropTypes({
     cardID: PropTypes.string.isRequired,
-    boardID: PropTypes.string.isRequired,
+    // boardID: PropTypes.string.isRequired,
     // Injected by mapProps
     startEdit: PropTypes.func.isRequired,
     stopEdit: PropTypes.func.isRequired,
@@ -61,6 +69,8 @@ export default compose(
     onEdit: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onInputChange: PropTypes.func.isRequired,
+    inputText: PropTypes.string.isRequired,
     // Injected by Redux
     text: PropTypes.string.isRequired,
     setText: PropTypes.func.isRequired

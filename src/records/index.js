@@ -12,7 +12,7 @@ export const Board = new Record({
 
 export const Card = new Record({
   id: undefined,
-  text: 'waka waka'
+  text: ''
   // date created
   // is done
 })
