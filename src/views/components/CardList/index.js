@@ -2,6 +2,7 @@ import { PropTypes } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { compose, pure, setPropTypes, setDisplayName } from 'recompose'
 import { connect } from 'react-redux'
+import { deleteCard } from 'actions'
 
 import CardList from './CardList'
 
@@ -11,6 +12,11 @@ export default compose(
   connect(
     (state, props) => ({
       cards: state.get('cardsByBoard').get(props.boardID)
+    }),
+    (dispatch, props) => ({
+      deleteCard: (id) => {
+        dispatch( deleteCard({ id, boardID: props.boardID }) )
+      }
     })
   ),
  
@@ -19,7 +25,8 @@ export default compose(
   setPropTypes({
     boardID: PropTypes.string.isRequired,    
     // Injected by Redux
-    cards: ImmutablePropTypes.list.isRequired
+    cards: ImmutablePropTypes.list.isRequired,
+    deleteCard: PropTypes.func.isRequired
   })
 
 )(CardList)

@@ -1,7 +1,7 @@
 import { PropTypes } from 'react'
 import { compose, pure, setPropTypes, setDisplayName, withState, mapProps, withHandlers } from 'recompose'
 import { connect } from 'react-redux'
-import { editCard /* , deleteCard */} from 'actions'
+import { editCard } from 'actions'
 
 import Card from './Card'
 
@@ -17,9 +17,6 @@ export default compose(
         if (props.isEditing) props.editDone()
         dispatch( editCard({ id: props.cardID, text }) )
       }
-      // deleteCard: (text) => {
-      //   dispatch( deleteCard({ id: props.cardID, boardID: props.boardID }) )
-      // } pass from parent?
     })
   ),
 
@@ -50,15 +47,16 @@ export default compose(
       // e.persist()
       props.setInputText(e.target.value)
     },
-    // onDelete: props => () => {
-    //   props.deleteCard()
-    // }
+    onDelete: props => () => {
+      props.deleteCard(props.cardID)
+    }
   }),
  
   pure,
 
   setPropTypes({
     cardID: PropTypes.string.isRequired,
+    deleteCard: PropTypes.func.isRequired,
     // boardID: PropTypes.string.isRequired,
     // Injected by mapProps
     startEdit: PropTypes.func.isRequired,
@@ -71,6 +69,7 @@ export default compose(
     onCancel: PropTypes.func.isRequired,
     onInputChange: PropTypes.func.isRequired,
     inputText: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired,
     // Injected by Redux
     text: PropTypes.string.isRequired,
     setText: PropTypes.func.isRequired

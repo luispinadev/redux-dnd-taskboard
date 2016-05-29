@@ -8,7 +8,7 @@ import styles from 'views/components/Card/Card.styl'
 describe('Components:: Card', function(){
   const props = { 
     cardID: 'ID',
-    // boardID: 'boardID',
+    deleteCard: f => f,
     text: 'Lorem to the ipsum',
     setText: f => f,
     startEdit: f => f,
@@ -18,33 +18,39 @@ describe('Components:: Card', function(){
     onSave: f => f,
     onCancel: f => f,
     onInputChange: f => f,
-    inputText: 'Lorem to the ipsum'
+    inputText: 'Lorem to the ipsum',
+    onDelete: f => f
   }
-  describe('Rendering', function(){
 
-    it('renders a wrapper div', function(){
-      const wrapper = shallow(<Card {...props} />)
-      expect( wrapper.hasClass(styles.wrapper) ).to.be.true
-    })
+  it('renders a wrapper div', function(){
+    const wrapper = shallow(<Card {...props} />)
+    expect( wrapper.hasClass(styles.wrapper) ).to.be.true
+  })
 
-    it('renders a container div', function(){
-      const wrapper = shallow(<Card {...props} />)
-      expect( wrapper.find('.'+styles.container) ).to.have.length(1)
-    })
+  it('renders a container div', function(){
+    const wrapper = shallow(<Card {...props} />)
+    expect( wrapper.find('.'+styles.container) ).to.have.length(1)
+  })
 
-    it('renders task text div', function(){
-      const wrapper = shallow(<Card {...props} />)
-      const textDiv = wrapper.find('.'+styles.text) 
+  it('renders task text div', function(){
+    const wrapper = shallow(<Card {...props} />)
+    const textDiv = wrapper.find('.'+styles.text) 
 
-      expect(textDiv).to.have.length(1)
-      expect(textDiv.text()).to.equal(props.text)
-    })
+    expect(textDiv).to.have.length(1)
+    expect(textDiv.text()).to.equal(props.text)
+  })
 
-    it('renders controls block', function(){
-      const wrapper = shallow(<Card {...props} />)
-      expect( wrapper.find('.'+styles.controlsBlock) ).to.have.length(1)
-    })
+  it('renders controls block', function(){
+    const wrapper = shallow(<Card {...props} />)
+    expect( wrapper.find('.'+styles.controlsBlock) ).to.have.length(1)
+  })
 
+  it('"onDelete" is called when delete button is clicked', function(){
+    const handler = sinon.spy()
+    const wrapper = shallow(<Card {...props} onDelete={handler}/>)
+    wrapper.find('.fa-trash-o').simulate('click')
+
+    expect( handler.called ).to.be.true
   })
 
   describe('Edit text process', function(){

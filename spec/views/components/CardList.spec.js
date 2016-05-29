@@ -10,7 +10,8 @@ describe('Components:: CardList', function(){
 
   const props = {
     boardID: 'boardID',
-    cards: List()
+    cards: List(),
+    deleteCard: f => f
   }
 
   it('is a container div', function(){

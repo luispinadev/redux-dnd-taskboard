@@ -2,15 +2,15 @@ import React, { PropTypes } from 'react'
 
 import styles from './Card.styl'
 
-const Card = ({ text, onEdit, onSave, onCancel, isEditing, inputText, onInputChange }) => {
+const Card = ({ text, onEdit, onSave, onCancel, isEditing, inputText, onInputChange, onDelete }) => {
   return (
     <div className={styles.wrapper}> {/* indented at same level because it's just a style wrapper */}
       { !isEditing ?
           <div className={styles.container} >
             <div className={styles.text} title={text}>{text}</div>
             <div className={styles.controlsBlock} >
-              <i title="edit" className={`fa fa-pencil ${styles.icon}`} onClick={onEdit}/>
-              <i title="delete" className={`fa fa-trash-o ${styles.icon}`} />
+              <i title="edit" className={`fa fa-pencil ${styles.icon}`} onClick={onEdit} />
+              <i title="delete" className={`fa fa-trash-o ${styles.icon}`} onClick={onDelete} />
             </div> 
           </div>
           :
