@@ -19,10 +19,12 @@ export default compose(
   withHandlers({
     onSave: props => () => {
       props.stopCreate()
+      props.setInputText('')
       props.createCard(props.inputText)
     },
     onCancel: props => () => {
       props.stopCreate()
+      props.setInputText('')
     }
   }),
  
