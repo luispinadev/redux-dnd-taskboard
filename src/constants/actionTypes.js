@@ -13,6 +13,7 @@
 
 export const CARD_CREATE = 'CARD_CREATE'
 export const CARD_DELETE = 'CARD_DELETE'
+export const CARD_EDIT = 'CARD_EDIT'
 
 // Move card to board
 export const CARD_MOVE = 'CARD_MOVE'

@@ -26,6 +26,7 @@ export const setBoardTitle = createAction(actionTypes.BOARD_SET_TITLE)
 // Card
 export const createCard = createAction(actionTypes.CARD_CREATE, idGenHelper)
 export const deleteCard = createAction(actionTypes.CARD_DELETE)
+export const editCard = createAction(actionTypes.CARD_EDIT)
 
 // Card Move
 // export const cardMove = createAction(actionTypes.CARD_MOVE)

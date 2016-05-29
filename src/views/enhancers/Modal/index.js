@@ -7,18 +7,18 @@ export default (WrappedComponent, {
     console.log('CLOSE MODAL')
     return f
   },
-  showCloseButton = true,
+  showCloseButton = false,
   closeButton = <i className={"fa fa-times "+styles.closeButton} />,
   closeOnBackdropClick = true,
-  isFixed = true,
-  backdropOpacity = 0.3, // handy if using default class, but want to override default opacity ex: 0 for transparent
+  isFixed = false,
+  backdropOpacity = 0.3, // numeric opacity value for backdrop, ex: use 0 for transparent, 1 for no transparency
   backdropClass = styles.backdrop,
   containerClass = styles.container,
 }) => props => 
   <div>
     <div
       className={backdropClass} 
-      style={{opacity: backdropOpacity }}
+      style={ {opacity: backdropOpacity }}
       onClick={closeOnBackdropClick && closeCallback}
     />
     <div className={classNames(containerClass, { [styles.isFixed]: isFixed })}>

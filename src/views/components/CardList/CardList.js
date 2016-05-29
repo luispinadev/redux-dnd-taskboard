@@ -1,13 +1,9 @@
 import React from 'react'
 
 import styles from './CardList.styl'
-import ModalHOC from 'views/enhancers/Modal'
-
-const Cena = () => <div>cena</div>
-const WrappedCena = ModalHOC(Cena, {})
+import Card from 'views/components/Card'
 
 export default ({cards}) =>
 	<div className={styles.container} style={ cards.isEmpty() ? { paddingTop: 0} : {}} >
-	  { cards.map( (c, i) => <div key={i} >- {c.text}</div> )}
-    <WrappedCena />
+    { cards.map( (c, i) => <Card key={i} cardID={c}/> )}
 	</div>

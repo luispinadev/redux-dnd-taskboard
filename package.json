@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "redux taskboard app with drag and drop interface",
   "main": "src/index.js",
-  "repository": "",
+  "repository": "git+https://github.com/luispinadev/redux-dnd-taskboard.git",
   "scripts": {
     "build": "webpack --progress --colors",
     "start": "node devServer.js",

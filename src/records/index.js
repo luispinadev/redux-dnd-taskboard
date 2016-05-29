@@ -5,14 +5,14 @@ import { Record } from 'immutable'
 export const Board = new Record({
   id: undefined,
   title: ''
-  // width
-  // height
-  // pos
+  // width ?
+  // height ?
+  // pos ?
 })
 
 export const Card = new Record({
   id: undefined,
-  text: ''
+  text: 'waka waka'
   // date created
   // is done
-});
+})

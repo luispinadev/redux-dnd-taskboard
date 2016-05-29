@@ -2,23 +2,28 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { List } from 'immutable'
 
-import CardList from 'views/components/CardList/CardList'
 import styles from 'views/components/CardList/CardList.styl'
+import CardList from 'views/components/CardList/CardList'
+import Card from 'views/components/Card'
 
 describe('Components:: CardList', function(){
 
+  const props = {
+    boardID: 'boardID',
+    cards: List()
+  }
+
   it('is a container div', function(){
-    const wrapper = shallow(<CardList cards={List()} boardID="123" />)
+    const wrapper = shallow(<CardList {...props} />)
     expect( wrapper.hasClass(styles.container) ).to.be.true
   })
 
-  // it('renders card components', function(){
-  //   const props = {
-  //     cards: List([ 'boardID1', 'boardID2' ])
-  //   }
-  //   const wrapper = shallow(<CardList {...props}/>)
-  //   expect( wrapper.find(Card) ).to.have.length(2)
-  // })
+  it('renders card components', function(){
+    const cards = List([ 'cardID1', 'cardID2' ])
+    const wrapper = shallow(<CardList {...props} cards={cards} />)
+
+    expect( wrapper.find(Card) ).to.have.length(2)
+  })
 
 })
 

@@ -74,5 +74,13 @@ describe('Actions::', function(){
     })
   })
 
+  describe('editCard', function(){
+    it('returns a CARD_EDIT type action', function(){
+      action = actionCreators.editCard({ 'cardID': '123', 'text': 'new text' })
+      expected = { type: ActionTypes.CARD_EDIT, payload: { 'cardID': '123', 'text': 'new text' } }
+      expect(action).to.deep.equal(expected)
+    })
+  })
+
 })
 

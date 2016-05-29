@@ -40,5 +40,13 @@ describe('Reducer:: cards', function(){
     expect(finalState).to.be.empty
   })
 
+  it('handles CARD_EDIT', function(){
+    initialState = Map({ cardID: new Card({ id: 'cardID', text: 'Lorem'}) })
+    action = actionCreators.editCard({ id: 'cardID', text: 'Ipsum'})
+    finalState = cards(initialState, action)
+
+    expect(finalState.get('cardID').get('text')).to.equal('Ipsum')
+  })
+
 
 })
