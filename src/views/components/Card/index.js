@@ -63,6 +63,8 @@ export default compose(
     cardID: PropTypes.string, // .isRequired,
     deleteCard: PropTypes.func, // .isRequired,
     index: PropTypes.number,
+    startDrag: PropTypes.func,
+    endDrag: PropTypes.func,
     // Injected by mapProps
     startEdit: PropTypes.func, // .isRequired,
     stopEdit: PropTypes.func, // .isRequired,

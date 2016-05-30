@@ -16,3 +16,9 @@ export const Card = new Record({
   // date created
   // is done
 })
+
+export const DraggingCard = new Record({
+  cardID: undefined,
+  boardID: undefined,
+  index: undefined
+})

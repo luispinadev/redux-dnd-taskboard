@@ -20,7 +20,7 @@ const dragSource = {
     console.log('BEGIN DRAG')
     const { cardID, index } = props
     
-    // props.onBeginDrag(cardID, index) // update store state
+    props.startDrag({cardID, index}) // update store state
 
     return { cardID, hoverIndex: index }
   },
@@ -32,11 +32,7 @@ const dragSource = {
   endDrag(props, monitor) {
     const dropResult = monitor.getDropResult()
     console.log('END DRAG', dropResult)
-
-    // if (dropResult && dropResult.hasOwnProperty('droppedOver')){
-    //   props.onCardDroped(dropResult.cardID, dropResult.boardID, dropResult.hoverIndex )
-    // }
-
+    props.endDrag()
   }
 
 }

@@ -7,7 +7,7 @@
 // export const APP_LOAD_FAILURE = 'APP_LOAD_FAILURE'
 
 export const APP_START_DRAG = 'APP_START_DRAG'
-export const APP_END_DRAG = 'APP_START_DRAG'
+export const APP_END_DRAG = 'APP_END_DRAG'
 
 // ------------------------------------------------------------------------------
 // Card
