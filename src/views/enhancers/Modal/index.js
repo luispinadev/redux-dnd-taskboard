@@ -3,10 +3,7 @@ import classNames from 'classnames'
 import styles from './modal.styl'
 
 export default (WrappedComponent, {
-  closeCallback = f => { 
-    console.log('CLOSE MODAL')
-    return f
-  },
+  closeCallbackName = '',
   showCloseButton = false,
   closeButton = <i className={"fa fa-times "+styles.closeButton} />,
   closeOnBackdropClick = true,
@@ -19,11 +16,11 @@ export default (WrappedComponent, {
     <div
       className={backdropClass} 
       style={ {opacity: backdropOpacity }}
-      onClick={closeOnBackdropClick && closeCallback}
+      onClick={closeOnBackdropClick && props[closeCallbackName]}
     />
     <div className={classNames(containerClass, { [styles.isFixed]: isFixed })}>
-      { showCloseButton && <div onClick={closeCallback}>{closeButton}</div> }
-      <WrappedComponent {...props} modalClose={closeCallback} />
+      { showCloseButton && <div onClick={ props[closeCallbackName] } >{closeButton}</div> }
+      <WrappedComponent {...props} />
     </div>
   </div>
 

@@ -15,9 +15,7 @@ module.exports = {
     modulesDirectories: ['node_modules'],
     extensions: ['', '.js', '.json', '.styl'],
     alias: {
-      // project
       'config': path.join(__dirname, 'config'),
-      // app
       'actions': path.join(__dirname, 'src/actions'),
       // 'api': path.join(__dirname, 'src/api'),
       'constants': path.join(__dirname, 'src/constants'),

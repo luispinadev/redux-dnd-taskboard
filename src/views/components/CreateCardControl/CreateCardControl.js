@@ -2,11 +2,14 @@ import React from 'react'
 
 import styles from './createCardControl.styl'
 import Card from 'views/components/Card/Card'
+import modal from 'views/enhancers/modal'
+
+const ModalCard = modal(Card, { closeCallbackName: 'onCancel', backdropOpacity: 0 })
 
 export default ({ startCreate, isCreating, setInputText, inputText, onSave, onCancel }) => 
   <div>
     { isCreating ?
-      <Card
+      <ModalCard
         text={inputText}
         isEditing={true}
         onSave={ onSave }

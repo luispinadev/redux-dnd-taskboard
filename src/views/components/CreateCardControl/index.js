@@ -4,6 +4,7 @@ import { compose, pure, setPropTypes, setDisplayName, withState, mapProps, withH
 import CreateCardControl from './CreateCardControl'
 
 export default compose(
+
   setDisplayName('CreateCardControl'),
 
   withState('isCreating', 'setIsCreating', false),
