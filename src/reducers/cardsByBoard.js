@@ -29,12 +29,12 @@ export default handleActions({
   [CARD_CREATE]: (state, { payload }) =>
     state.updateIn([payload.boardID], l => 
       payload.hasOwnProperty('index') ? 
-        l.insert(payload.index, payload.id) : l.unshift(payload.id)
+        l.insert(payload.index, payload.cardID) : l.unshift(payload.cardID)
     ),
 
   [CARD_DELETE]: (state, { payload }) =>
     state.updateIn([payload.boardID], l => 
-      l.delete(l.indexOf(payload.id))
+      l.delete(l.indexOf(payload.cardID))
     ),
 
   [CARD_MOVE]: (state, { payload }) =>

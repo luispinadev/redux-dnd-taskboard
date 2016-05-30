@@ -29,20 +29,20 @@ describe('Reducer:: cards', function(){
     action = actionCreators.createCard()
     finalState = cards(initialState, action)
 
-    expect(finalState.get(action.payload.id)).to.equal( new Card(action.payload) )
+    expect(finalState.get(action.payload.cardID)).to.equal( new Card(action.payload) )
   })
 
   it('handles CARD_DELETE', function(){
-    initialState = Map({ cardID: new Card({ id: 'cardID'}) })
-    action = actionCreators.deleteCard({ id: 'cardID'})
+    initialState = Map({ cardID: new Card({ cardID: 'cardID'}) })
+    action = actionCreators.deleteCard({ cardID: 'cardID'})
     finalState = cards(initialState, action)
 
     expect(finalState).to.be.empty
   })
 
   it('handles CARD_EDIT', function(){
-    initialState = Map({ cardID: new Card({ id: 'cardID', text: 'Lorem'}) })
-    action = actionCreators.editCard({ id: 'cardID', text: 'Ipsum'})
+    initialState = Map({ cardID: new Card({ cardID: 'cardID', text: 'Lorem'}) })
+    action = actionCreators.editCard({ cardID: 'cardID', text: 'Ipsum'})
     finalState = cards(initialState, action)
 
     expect(finalState.get('cardID').get('text')).to.equal('Ipsum')

@@ -18,7 +18,7 @@ export default compose(
     (dispatch, props) => ({
       setText: (text) => {
         if (props.isEditing) props.editDone()
-        dispatch( editCard({ id: props.cardID, text }) )
+        dispatch( editCard({ cardID: props.cardID, text }) )
       }
     })
   ),
