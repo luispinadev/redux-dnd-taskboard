@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { deleteCard } from 'actions'
 
 import CardList from './CardList'
-import dropTargetCardListHOC from './dropTargetCardListHOC'
+import dndCardListHOC from './dndCardListHOC'
 
 export default compose(
 
@@ -31,7 +31,7 @@ export default compose(
     deleteCard: PropTypes.func.isRequired
   }),
 
-  dropTargetCardListHOC
+  dndCardListHOC
 
 )(CardList)
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 // ------------------------------------------------------------------------------
 // DropTarget Setup for CardList component
@@ -11,13 +11,22 @@ import { DropTarget } from 'react-dnd'
 // Drop target Setup
 
 const dropTarget = {
-  drop(props) {
-    console.log('DROPPED!')
-  },
+  drop(props, monitor) {
+    console.log('DROPPED OVER BOARD', monitor.getDropResult())
 
-  hover(props, monitor) {
-    console.log('HOVER', monitor.getItem())
+    if(!monitor.didDrop()){
+      // dropped over this board
+      console.log('MOVE TO BOTTOM OF BOARD', props.boardID)
+    }else{
+      const { cardID, hoverIndex } = monitor.getDropResult()
+      console.log('MOVE '+cardID+' TO INDEX '+hoverIndex)
+    }
+    
   }
+
+  // hover(props, monitor) {
+  //   console.log('HOVER', monitor.getItem())
+  // }
 
 }
 

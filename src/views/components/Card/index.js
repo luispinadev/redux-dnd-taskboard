@@ -5,7 +5,7 @@ import { editCard } from 'actions'
 
 import Card from './Card'
 import EditingCard from './EditingCard'
-import dragSourceCardHOC from './dragSourceCardHOC'
+import dndCardHOC from './dndCardHOC'
 // import dropTargetCardHOC from './dropTargetCardHOC'
 
 
@@ -55,7 +55,7 @@ export default compose(
   branch(
     props => props.isEditing,
     renderComponent(EditingCard),
-    comp => dragSourceCardHOC(comp)
+    comp => dndCardHOC(comp)
   ),
 
   pure,
@@ -63,6 +63,7 @@ export default compose(
   setPropTypes({
     cardID: PropTypes.string, // .isRequired,
     deleteCard: PropTypes.func, // .isRequired,
+    index: PropTypes.number,
     // Injected by mapProps
     startEdit: PropTypes.func, // .isRequired,
     stopEdit: PropTypes.func, // .isRequired,
