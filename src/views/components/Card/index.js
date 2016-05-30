@@ -1,13 +1,15 @@
 import { PropTypes } from 'react'
-import { compose, pure, setPropTypes, setDisplayName, withState, mapProps, withHandlers } from 'recompose'
+import { compose, branch, pure, setPropTypes, setDisplayName, withState, mapProps, withHandlers, renderComponent } from 'recompose'
 import { connect } from 'react-redux'
 import { editCard } from 'actions'
 
 import Card from './Card'
+import EditingCard from './EditingCard'
+import draggable from 'views/enhancers/draggable'
 
 export default compose(
   setDisplayName('Card'),
-  
+
   connect(
     (state, props) => ({
       text: state.get('cards').get(props.cardID).get('text')
@@ -48,6 +50,12 @@ export default compose(
     }
   }),
  
+  branch(
+    props => props.isEditing,
+    renderComponent(EditingCard),
+    comp => draggable(comp) // TD: add drag source/droptarget objects as args
+  ),
+
   pure,
 
   setPropTypes({

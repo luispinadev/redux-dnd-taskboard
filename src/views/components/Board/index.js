@@ -3,10 +3,14 @@ import { PropTypes } from 'react'
 import { compose, pure, setPropTypes, setDisplayName } from 'recompose'
 import { connect } from 'react-redux'
 import { createCard } from 'actions'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 import Board from './Board'
 
 export default compose(
+  DragDropContext(HTML5Backend),
+
   setDisplayName('Board'),
   
   connect(

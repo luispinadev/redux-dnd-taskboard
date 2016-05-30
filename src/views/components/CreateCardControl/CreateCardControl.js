@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styles from './createCardControl.styl'
-import Card from 'views/components/Card/Card'
+import Card from 'views/components/Card/EditingCard'
 import modal from 'views/enhancers/modal'
 
 const ModalCard = modal(Card, { closeCallbackName: 'onCancel', backdropOpacity: 0 })

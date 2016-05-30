@@ -5,6 +5,7 @@ import { shallow } from 'enzyme'
 
 import styles from 'views/components/Card/Card.styl'
 import Card from 'views/components/Card/Card'
+import EditingCard from 'views/components/Card/EditingCard'
 import ControlledInput from 'views/components/ControlledInput'
 
 describe('Components:: Card', function(){
@@ -24,42 +25,37 @@ describe('Components:: Card', function(){
     onDelete: f => f
   }
 
-  it('renders a wrapper div', function(){
-    const wrapper = shallow(<Card {...props} />)
-    expect( wrapper.hasClass(styles.wrapper) ).to.be.true
-  })
+  describe('Card', function(){
 
-  it('renders a container div', function(){
-    const wrapper = shallow(<Card {...props} />)
-    expect( wrapper.find('.'+styles.container) ).to.have.length(1)
-  })
+    it('renders a wrapper div', function(){
+      const wrapper = shallow(<Card {...props} />)
+      expect( wrapper.hasClass(styles.wrapper) ).to.be.true
+    })
 
-  it('renders task text div', function(){
-    const wrapper = shallow(<Card {...props} />)
-    const textDiv = wrapper.find('.'+styles.text) 
+    it('renders a container div', function(){
+      const wrapper = shallow(<Card {...props} />)
+      expect( wrapper.find('.'+styles.container) ).to.have.length(1)
+    })
 
-    expect(textDiv).to.have.length(1)
-    expect(textDiv.text()).to.equal(props.text)
-  })
+    it('renders task text div', function(){
+      const wrapper = shallow(<Card {...props} />)
+      const textDiv = wrapper.find('.'+styles.text) 
 
-  it('renders controls block', function(){
-    const wrapper = shallow(<Card {...props} />)
-    expect( wrapper.find('.'+styles.controlsBlock) ).to.have.length(1)
-  })
+      expect(textDiv).to.have.length(1)
+      expect(textDiv.text()).to.equal(props.text)
+    })
 
-  it('"onDelete" is called when delete button is clicked', function(){
-    const handler = sinon.spy()
-    const wrapper = shallow(<Card {...props} onDelete={handler}/>)
-    wrapper.find('.fa-trash-o').simulate('click')
+    it('renders controls block', function(){
+      const wrapper = shallow(<Card {...props} />)
+      expect( wrapper.find('.'+styles.controlsBlock) ).to.have.length(1)
+    })
 
-    expect( handler.called ).to.be.true
-  })
+    it('"onDelete" is called when delete button is clicked', function(){
+      const handler = sinon.spy()
+      const wrapper = shallow(<Card {...props} onDelete={handler}/>)
+      wrapper.find('.fa-trash-o').simulate('click')
 
-  describe('Edit text process', function(){
-
-    it('renders a ControlledInput when "isEditing" is true', function(){
-      const wrapper = shallow(<Card {...props} isEditing={true} />)
-      expect( wrapper.find(ControlledInput) ).to.have.length(1)
+      expect( handler.called ).to.be.true
     })
 
     it('"onEdit" is called when edit button is clicked', function(){
@@ -69,11 +65,33 @@ describe('Components:: Card', function(){
 
       expect( handler.called ).to.be.true
     })
+  })
+  
+  describe('EditingCard', function(){
 
+    it('renders a wrapper div', function(){
+      const wrapper = shallow(<EditingCard {...props} />)
+      expect( wrapper.hasClass(styles.wrapper) ).to.be.true
+    })
+
+    it('renders a container div', function(){
+      const wrapper = shallow(<EditingCard {...props} />)
+      expect( wrapper.find('.'+styles.container) ).to.have.length(1)
+    })
+
+    it('renders controls block', function(){
+      const wrapper = shallow(<EditingCard {...props} />)
+      expect( wrapper.find('.'+styles.controlsBlock) ).to.have.length(1)
+    })
+
+    it('renders a ControlledInput when "isEditing" is true', function(){
+      const wrapper = shallow(<EditingCard {...props} />)
+      expect( wrapper.find(ControlledInput) ).to.have.length(1)
+    })
 
     it('"onSave" is called when save button is clicked while editing', function(){
       const handler = sinon.spy()
-      const wrapper = shallow(<Card {...props} isEditing={true} onSave={handler}/>)
+      const wrapper = shallow(<EditingCard {...props} onSave={handler}/>)
       wrapper.find('.fa-check').simulate('click')
 
       expect( handler.called ).to.be.true
@@ -81,13 +99,14 @@ describe('Components:: Card', function(){
 
     it('"onCancel" is called when cancel button is clicked while editing', function(){
       const handler = sinon.spy()
-      const wrapper = shallow(<Card {...props} isEditing={true} onCancel={handler}/>)
+      const wrapper = shallow(<EditingCard {...props} onCancel={handler}/>)
       wrapper.find('.fa-times').simulate('click')
 
       expect( handler.called ).to.be.true
     })
 
   })  
+
 
 })
 

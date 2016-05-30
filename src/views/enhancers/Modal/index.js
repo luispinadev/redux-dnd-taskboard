@@ -5,7 +5,7 @@ import styles from './modal.styl'
 export default (WrappedComponent, {
   closeCallbackName = '',
   showCloseButton = false,
-  closeButton = <i className={"fa fa-times "+styles.closeButton} />,
+  closeButton = <i className={'fa fa-times '+styles.closeButton} />,
   closeOnBackdropClick = true,
   isFixed = false,
   backdropOpacity = 0.3, // numeric opacity value for backdrop, ex: use 0 for transparent, 1 for no transparency
