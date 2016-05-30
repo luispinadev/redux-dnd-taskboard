@@ -5,7 +5,9 @@ import { editCard } from 'actions'
 
 import Card from './Card'
 import EditingCard from './EditingCard'
-import draggable from 'views/enhancers/draggable'
+import dragSourceCardHOC from './dragSourceCardHOC'
+// import dropTargetCardHOC from './dropTargetCardHOC'
+
 
 export default compose(
   setDisplayName('Card'),
@@ -53,7 +55,7 @@ export default compose(
   branch(
     props => props.isEditing,
     renderComponent(EditingCard),
-    comp => draggable(comp) // TD: add drag source/droptarget objects as args
+    comp => dragSourceCardHOC(comp)
   ),
 
   pure,

@@ -15,7 +15,6 @@ $card-preview-border-col = #716E6E
 .wrapper
   padding $global-v-board-padding $global-h-board-padding 0 $global-h-board-padding
 .container
-  position relative
   min-height $card-height
   color $global-c-grey-text
   border solid 1px $card-border-color
@@ -53,10 +52,11 @@ $card-preview-border-col = #716E6E
 // Card action buttons
 
 .controlsBlock
-  position absolute
-  top 0
-  right 0
-  bottom 0
+  float right
+  // position absolute
+  // top 0
+  // right 0
+  // bottom 0
 
   // :hover
   //   width 40px

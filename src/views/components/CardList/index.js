@@ -5,42 +5,9 @@ import { connect } from 'react-redux'
 import { deleteCard } from 'actions'
 
 import CardList from './CardList'
-
-// ------------------------------------------------------------------------------
-// DnD target setup
-// ------------------------------------------------------------------------------
-
-import { DropTarget } from 'react-dnd'
-import dragTypes from 'constants/dragTypes'
-
-const dragTarget = {
-
-  // Update state acording to monitor item props
-  hover(props, monitor, component){
-    console.log('HOVERING '+props.boardID)
-    // const { cardID, boardID, displayIndex } = monitor.getItem()
-    // const currentData = component.state.hoverItemData
-    // const newData = Map({cardID, boardID, displayIndex})
-    // if (!currentData.equals(newData)) {
-    //   component.setState({ hoverItemData: newData })
-    // }
-  },
-  drop(props, monitor, component){
-    // component.setState({ droppedHere: true })
-    console.log('DROPPED HERE '+props.boardID)
-  }
-}
-
-// ------------------------------------------------------------------------------
-// Component
-// ------------------------------------------------------------------------------
+import dropTargetCardListHOC from './dropTargetCardListHOC'
 
 export default compose(
-
-  DropTarget(dragTypes.CARD, dragTarget, (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver()
-  })),
 
   setDisplayName('CardList'),
   
@@ -62,7 +29,9 @@ export default compose(
     // Injected by Redux
     cards: ImmutablePropTypes.list.isRequired,
     deleteCard: PropTypes.func.isRequired
-  })
+  }),
+
+  dropTargetCardListHOC
 
 )(CardList)
 
