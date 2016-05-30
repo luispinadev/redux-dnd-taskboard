@@ -6,7 +6,7 @@ import { Board } from 'records'
 
 
 export default handleActions({
-  [BOARD_CREATE]: (state, { payload }) => state.set(payload.id, new Board(payload) ),
-  [BOARD_DELETE]: (state, { payload }) => state.delete(payload.id)
+  [BOARD_CREATE]: (state, { payload }) => state.set(payload.boardID, new Board(payload) ),
+  [BOARD_DELETE]: (state, { payload }) => state.delete(payload.boardID)
 }, Map() )
 

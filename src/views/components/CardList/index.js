@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { compose, pure, setPropTypes, setDisplayName } from 'recompose'
 import { connect } from 'react-redux'
-import { deleteCard } from 'actions'
+import { deleteCard, moveCard } from 'actions'
 
 import CardList from './CardList'
 import dndCardListHOC from './dndCardListHOC'
@@ -16,9 +16,12 @@ export default compose(
       cards: state.get('cardsByBoard').get(props.boardID)
     }),
     (dispatch, props) => ({
-      deleteCard: (id) => {
-        dispatch( deleteCard({ id, boardID: props.boardID }) )
-      }
+      deleteCard: (cardID) => {
+        dispatch( deleteCard({ cardID, boardID: props.boardID }) )
+      },
+      // moveCard: ({ cardID, origID, index}) => {
+      //   dispatch( moveCard({cardID, destID: props.boardID }))
+      // }
     })
   ),
  

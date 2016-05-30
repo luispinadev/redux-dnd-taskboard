@@ -3,7 +3,7 @@ import { Record } from 'immutable'
 // Using records enforces state shape (+ self documents, coolio! )
 
 export const Board = new Record({
-  id: undefined,
+  boardID: undefined,
   title: ''
   // width ?
   // height ?
@@ -11,7 +11,7 @@ export const Board = new Record({
 })
 
 export const Card = new Record({
-  id: undefined,
+  cardID: undefined,
   text: ''
   // date created
   // is done

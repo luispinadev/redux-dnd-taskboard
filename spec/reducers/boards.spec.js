@@ -36,7 +36,7 @@ describe('Reducer:: boards', function(){
       'boardID': new Board(actionPayload)
     })
     finalState = boards( initialState, actionCreators.deleteBoard({
-      id: 'boardID'
+      boardID: 'boardID'
     }))
 
     expect(finalState).to.be.empty

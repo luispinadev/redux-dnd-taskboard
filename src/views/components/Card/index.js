@@ -6,7 +6,6 @@ import { editCard } from 'actions'
 import Card from './Card'
 import EditingCard from './EditingCard'
 import dndCardHOC from './dndCardHOC'
-// import dropTargetCardHOC from './dropTargetCardHOC'
 
 
 export default compose(

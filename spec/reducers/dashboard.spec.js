@@ -33,7 +33,7 @@ describe('Reducer:: dashboard', function(){
     it('inserts board at index on BOARD_CREATE', function(){
       initialState = List(['boardID'])
       finalState = dashboard( initialState, actionCreators.createBoard({
-        id: 'anotherID',
+        boardID: 'anotherID',
         index: 0
       }))
 
@@ -43,7 +43,7 @@ describe('Reducer:: dashboard', function(){
     it('deletes board on BOARD_DELETE', function(){
       initialState = List([ 'anotherID', 'boardID'])
       finalState = dashboard( initialState, actionCreators.deleteBoard({
-        id: 'anotherID'
+        boardID: 'anotherID'
       }))
       
       expect(finalState).to.equal( List(['boardID']) )

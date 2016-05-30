@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import CreateCardControl from 'views/components/CreateCardControl/CreateCardControl'
 import EditingCard from 'views/components/Card/EditingCard'
-// import modal from 'views/enhancers/modal'
+import { ModalCard }from 'views/components/CreateCardControl'
 import styles from 'views/components/CreateCardControl/createCardControl.styl'
 
 describe('Components:: CreateCardControl', function(){
@@ -32,7 +32,7 @@ describe('Components:: CreateCardControl', function(){
     // const ModalCard = modal(EditingCard, {})({})
     const wrapper = shallow(<CreateCardControl {...props} isCreating={true} />)
 
-    expect( wrapper.find(EditingCard) ).to.have.length(1)
+    expect( wrapper.find(ModalCard) ).to.have.length(1)
   })
 
 

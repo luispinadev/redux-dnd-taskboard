@@ -11,6 +11,11 @@ import { DragSource, DropTarget } from 'react-dnd'
 // ------------------------------------------------------------------------------
 
 const dragSource = {
+
+  // canDrag(props){ // lock dragging if awaiting async move response for this card
+  //   return !props.movePending
+  // },
+
   beginDrag(props) {
     console.log('BEGIN DRAG')
     const { cardID, index } = props

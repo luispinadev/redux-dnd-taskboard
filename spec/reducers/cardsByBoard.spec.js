@@ -34,10 +34,33 @@ describe('Reducer:: cardsByBoard', function(){
     initialState = fromJS({ '123': ['cardID'] })
     finalState = cardsByBoard( initialState, actionCreators.deleteCard({
       boardID: '123',
-      id: 'cardID'
+      cardID: 'cardID'
     }))
 
     expect(finalState.get('123')).to.be.empty
+  })
+
+  it('handles CARD_MOVE', function(){
+    initialState = fromJS({ abc: ['cardID'], xyz: [] })
+    finalState = cardsByBoard( initialState, actionCreators.moveCard({
+      origID: 'abc',
+      destID: 'xyz',
+      cardID: 'cardID'
+    }))
+
+    expect(finalState).to.equal( fromJS({ abc: [], xyz: ['cardID'] }) )
+  })
+
+  it('handles CARD_MOVE to index', function(){
+    initialState = fromJS({ abc: ['cardID1'], xyz: ['cardID2', 'cardID3'] })
+    finalState = cardsByBoard( initialState, actionCreators.moveCard({
+      origID: 'abc',
+      destID: 'xyz',
+      cardID: 'cardID1',
+      index: 1
+    }))
+
+    expect(finalState).to.equal( fromJS({ abc: [], xyz: ['cardID2', 'cardID1', 'cardID3'] }) )
   })
 
   it('handles BOARD_CREATE', function(){
@@ -52,7 +75,7 @@ describe('Reducer:: cardsByBoard', function(){
       'boardID': []
     })
     finalState = cardsByBoard( initialState, actionCreators.deleteBoard({
-      id: 'boardID'
+      boardID: 'boardID'
     }))
 
     expect(finalState).to.equal( Map() )
