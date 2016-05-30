@@ -28,9 +28,10 @@ describe('Components:: CreateCardControl', function(){
   })
 
   // NOT WORKING with Card wrapped by modal HOC..
-  it('Shows a Card component in editing state when "isCreating" === true', function(){
-    // const ModalCard = modal(Card, {})
+  it('Renders a modal wrapped Card component in editing state when "isCreating" === true', function(){
+    // const ModalCard = modal(Card, {})({})
     const wrapper = shallow(<CreateCardControl {...props} isCreating={true} />)
+
     expect( wrapper.find(Card) ).to.have.length(1)
   })
 
