@@ -12,14 +12,13 @@ import { DropTarget } from 'react-dnd'
 
 const dropTarget = {
   drop(props, monitor) {
-    console.log('DROPPED OVER BOARD', monitor.getDropResult())
+    const data = monitor.getItem()
 
-    if(!monitor.didDrop()){
-      // dropped over this board
-      console.log('MOVE TO BOTTOM OF BOARD', props.boardID)
-    }else{
-      const { cardID, hoverIndex } = monitor.getDropResult()
-      console.log('MOVE '+cardID+' TO INDEX '+hoverIndex)
+    // dropped over this comp
+    if (!monitor.didDrop()){ // or droppedOver === dragTypes.CARD
+      props.moveCard({ cardID: data.cardID, origID: props.dragOrigin })
+    } else {
+      props.moveCard({ cardID: data.cardID, origID: props.dragOrigin, index: data.hoverIndex })
     }
     
   }
@@ -36,10 +35,10 @@ export default (WrappedComponent) =>
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver()
   })
-  )(props =>
-    props.connectDropTarget(
+  )( ({ connectDropTarget, ...rest }) =>
+    connectDropTarget(
       <div>
-        <WrappedComponent {...props} />
+        <WrappedComponent {...rest} />
       </div>
     )
   )

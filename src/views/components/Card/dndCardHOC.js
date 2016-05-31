@@ -17,23 +17,16 @@ const dragSource = {
   // },
 
   beginDrag(props) {
-    console.log('BEGIN DRAG')
     const { cardID, index } = props
-    
     props.startDrag({cardID, index}) // update store state
-
-    return { cardID, hoverIndex: index }
+    return { cardID, hoverIndex: index, previewIndex: index }
   },
 
   isDragging(props, monitor) {
     return props.cardID === monitor.getItem().cardID
   },
 
-  endDrag(props, monitor) {
-    const dropResult = monitor.getDropResult()
-    console.log('END DRAG', dropResult)
-    props.endDrag()
-  }
+  endDrag(props, monitor) { props.endDrag() }
 
 }
 
@@ -50,7 +43,10 @@ const throttledHoverHandler =  throttle( (props, monitor, component) => {
   // ignore self-hover
   if (hoverItem.cardID === cardID) return
 
-  // Set index according to hover position relative to component
+  // set index
+  hoverItem.hoverIndex = index
+  
+  // Set preview index according to hover position relative to component
   const hoveredBoundingRect = findDOMNode(component).getBoundingClientRect()   // Determine rectangle on screen
   const hoveredMiddleY = (hoveredBoundingRect.bottom - hoveredBoundingRect.top) / 2   // Get vertical middle
   const mousePosition = monitor.getClientOffset()   // Determine mouse position
@@ -58,9 +54,9 @@ const throttledHoverHandler =  throttle( (props, monitor, component) => {
 
   // hovering top half 
   if (mouseToTop < hoveredMiddleY ) {
-    hoverItem.hoverIndex = index
+    hoverItem.previewIndex = index
   } else // hovering bottom half
-  hoverItem.hoverIndex = index + 1
+  hoverItem.previewIndex = index + 1
 
 }, 30, { leading: true, trailing: false })
 
@@ -70,10 +66,8 @@ const dropTarget = {
   },
 
   // The returned obj will be catched by target CardList's drop handler.
-  // This way, CardList can know if the card was dropped over an existing card or directly over itself
   drop(props, monitor){
-    const { cardID, hoverIndex } = monitor.getItem()
-    console.log('DROP OVER CARD')
+    const { cardID, hoverIndex } = monitor.getItem()    
     return { droppedOver: dragTypes.CARD, cardID, hoverIndex }
   }
 }

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import CreateCardControl from 'views/components/CreateCardControl/CreateCardControl'
 import EditingCard from 'views/components/Card/EditingCard'
-import { ModalCard }from 'views/components/CreateCardControl'
+import { ModalCard } from 'views/components/CreateCardControl'
 import styles from 'views/components/CreateCardControl/createCardControl.styl'
 
 describe('Components:: CreateCardControl', function(){

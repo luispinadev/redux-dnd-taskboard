@@ -1,4 +1,4 @@
-import { List, Map, Seq } from 'immutable'
+import { List, Map } from 'immutable'
 import { handleActions } from 'redux-actions'
 import compose from 'recompose/compose' // Usualy I'd use lodash's implementation, but I'm already using this one in lots of places
 

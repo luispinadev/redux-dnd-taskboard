@@ -14,21 +14,25 @@ export default compose(
   connect(
     (state, props) => ({
       cards: state.getIn(['cardsByBoard', props.boardID]),
-      draggingCard: state.getIn(['app', 'draggingCard'])
+      dragOrigin: state.getIn(['app', 'dragData', 'boardID'])
     }),
     (dispatch, props) => ({
       deleteCard: (cardID) => {
         dispatch( deleteCard({ cardID, boardID: props.boardID }) )
       },
       startDrag: ({cardID, index}) => {
-        dispatch( startDrag({ cardID, boardID: props.boardID }) )
+        dispatch( startDrag({ 
+          cardID, boardID: props.boardID, index
+        }) )
       },
       endDrag: () => {
         dispatch( endDrag() )
+      },
+      moveCard: (data) => {
+        dispatch( moveCard({
+          destID: props.boardID, ...data
+        }))
       }
-      // moveCard: ({ cardID, origID, index}) => {
-      //   dispatch( moveCard({cardID, destID: props.boardID }))
-      // }
     })
   ),
  
@@ -40,10 +44,9 @@ export default compose(
     cards: ImmutablePropTypes.list.isRequired,
     deleteCard: PropTypes.func.isRequired,
     startDrag: PropTypes.func.isRequired,
-    endDrag: PropTypes.func.isRequired
+    endDrag: PropTypes.func.isRequired,
+    moveCard: PropTypes.func.isRequired
   }),
 
-  dndCardListHOC
-
-)(CardList)
+)(dndCardListHOC(CardList))
 
