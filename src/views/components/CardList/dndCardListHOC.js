@@ -1,7 +1,7 @@
-import React from 'react'
-import { compose, withState, mapProps } from 'recompose'
+import React, { Component } from 'react'
+import { compose, withState, mapProps, lifecycle } from 'recompose'
 import throttle from 'lodash.throttle'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 
 // ------------------------------------------------------------------------------
 // DropTarget Setup for CardList component
@@ -15,7 +15,11 @@ import { DropTarget } from 'react-dnd'
 
 const hoverHandler = throttle( (props, monitor) => {
   const data = fromJS(monitor.getItem())
-  if (!data.equals(props.hoverData)) props.setHoverData(data) 
+
+  if (!data.equals(props.hoverData.get('hoverItem'))) {
+    props.updateHoverData(data)
+  }
+
 }, 50, { leading: true, trailing: false })
 
 const dropTarget = {
@@ -47,27 +51,48 @@ const dropTarget = {
 export default (WrappedComponent) =>
   compose(
 
-    withState('hoverData', 'setHoverData', null),
+    withState('hoverData', 'setHoverData', props => Map({ hoverItem: Map(), cards: props.cards })),
 
-    mapProps(({ setHoverData, ...rest }) => ({
-      setHoverData: data => {
-        setHoverData(data)
-      },
-      ...rest
+    mapProps(({ setHoverData, cards, ...rest }) => ({
+      updateHoverData: data =>
+        setHoverData(Map({ 
+          hoverItem: data, 
+          cards: cards.insert( data.get('previewIndex', data.get('cardID')) )
+        })),
+      resetHoverData: () => setHoverData(Map({ hoverItem: Map(), cards: cards })),
+      cards, ...rest
     })),
 
     DropTarget(dragTypes.CARD, dropTarget, (connect, monitor) => ({
       connectDropTarget: connect.dropTarget(),
       isOver: monitor.isOver()
-    }))
+    })),
 
-  )( ({ connectDropTarget, ...rest }) =>
-    connectDropTarget(
-      <div>
-        <WrappedComponent {...rest} />
-      </div>
-    )
-  )
+    // lifecycle({
+    //   componentWillReceiveProps: ({isOver, resetHoverData}) => {
+    //     // if (!isOver && this.props.isOver) resetHoverData()
+    //     console.log(this) // for some reason, 'this' is undefined, despite that if I open this in the debugger, I can use it corectly? ?!?!
+    //   }
+    // })
+
+
+  )( // ({ connectDropTarget, hoverData, ...rest }) =>
+  class dndCardList extends Component {
+  
+    componentWillReceiveProps({isOver, cards, resetHoverData}){
+      props = this.props
+      if (!isOver && this.props.isOver || cards !== props.cards) resetHoverData()
+    }
+
+    render(){
+      const { connectDropTarget, isOver, hoverData, ...rest } = this.props
+      return connectDropTarget(
+        <div>
+          <WrappedComponent {...rest} cards={hoverData.get('cards')}/>
+        </div>
+      )
+    }
+  })
 
 
 
