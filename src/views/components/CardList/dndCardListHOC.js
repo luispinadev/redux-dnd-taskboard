@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { compose, withState, mapProps, lifecycle } from 'recompose'
+import { compose, withState, mapProps } from 'recompose'
 import throttle from 'lodash.throttle'
 import { fromJS, Map } from 'immutable'
 
@@ -14,11 +14,9 @@ import { DropTarget } from 'react-dnd'
 // Drop target Setup
 
 const hoverHandler = throttle( (props, monitor) => {
-  const data = fromJS(monitor.getItem())
 
-  if (!data.equals(props.hoverData.get('hoverItem'))) {
-    props.updateHoverData(data)
-  }
+  const data = fromJS(monitor.getItem())
+  if (!data.equals(props.hoverData)) props.updateHoverData(data)
 
 }, 50, { leading: true, trailing: false })
 
@@ -26,12 +24,11 @@ const dropTarget = {
 
   drop(props, monitor) {
     const data = monitor.getItem()
-
     if (!monitor.didDrop()){ // dropped over the board
       props.moveCard({ cardID: data.cardID, origID: props.dragOrigin })
     } else { // dropped over a card
       if (data.cardID === data.hoverID) return // ignore card self drop
-      props.moveCard({ cardID: data.cardID, origID: props.dragOrigin, index: data.hoverIndex })
+      props.moveCard({ cardID: data.cardID, origID: props.dragOrigin, index: data.previewIndex })
     }
     
   },
@@ -51,47 +48,60 @@ const dropTarget = {
 export default (WrappedComponent) =>
   compose(
 
-    withState('hoverData', 'setHoverData', props => Map({ hoverItem: Map(), cards: props.cards })),
+    withState('hoverData', 'setHoverData', Map()),
 
     mapProps(({ setHoverData, cards, ...rest }) => ({
-      updateHoverData: data =>
-        setHoverData(Map({ 
-          hoverItem: data, 
-          cards: cards.insert( data.get('previewIndex', data.get('cardID')) )
-        })),
-      resetHoverData: () => setHoverData(Map({ hoverItem: Map(), cards: cards })),
+      updateHoverData: data =>{
+        setHoverData(data)
+      },
+      resetHoverData: () => { setHoverData(Map()) },
       cards, ...rest
     })),
 
     DropTarget(dragTypes.CARD, dropTarget, (connect, monitor) => ({
       connectDropTarget: connect.dropTarget(),
       isOver: monitor.isOver()
-    })),
+    }))
 
-    // lifecycle({
-    //   componentWillReceiveProps: ({isOver, resetHoverData}) => {
-    //     // if (!isOver && this.props.isOver) resetHoverData()
-    //     console.log(this) // for some reason, 'this' is undefined, despite that if I open this in the debugger, I can use it corectly? ?!?!
-    //   }
-    // })
-
-
-  )( // ({ connectDropTarget, hoverData, ...rest }) =>
-  class dndCardList extends Component {
+  )( class dndCardList extends Component {
   
-    componentWillReceiveProps({isOver, cards, resetHoverData}){
-      props = this.props
-      if (!isOver && this.props.isOver || cards !== props.cards) resetHoverData()
+    constructor(props) {
+      super(props)
+      // The list of cards is moved to state, so we can draw a preview of the hovered item if necessary
+      this.state = { cards: props.cards }
+    }
+
+    // Manage hoverData and state.cards
+    componentWillReceiveProps({boardID, dragOrigin, dragIndex, isOver, cards, resetHoverData, hoverData}){
+      const props = this.props
+      
+      // if hovered item 'leaving' board area, clear hoverData
+      if (!isOver && props.isOver || cards !== props.cards) resetHoverData()
+
+      // Setup preview inside cards list
+      else if (hoverData.isEmpty()){ // if no hoverData, display original cards list from props
+        this.setState({ cards: cards })
+      } else {
+        const previewIndex = hoverData.get('previewIndex')
+        if (dragOrigin === boardID){
+          // also hide original card if it belongs to this board
+          this.setState({ 
+            cards: cards.remove(dragIndex).insert(hoverData.get('previewIndex'), hoverData.get('cardID') )
+          })
+        } else this.setState({ cards: cards.insert(hoverData.get('previewIndex'), hoverData.get('cardID') ) })
+      }
+
     }
 
     render(){
-      const { connectDropTarget, isOver, hoverData, ...rest } = this.props
+      const { connectDropTarget, ...rest } = this.props
       return connectDropTarget(
         <div>
-          <WrappedComponent {...rest} cards={hoverData.get('cards')}/>
+          <WrappedComponent {...rest} cards={this.state.cards} />
         </div>
       )
     }
+
   })
 
 

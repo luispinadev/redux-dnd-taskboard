@@ -40,15 +40,16 @@ const hoverHandler = throttle( (props, monitor, component) => {
   let hoverItem = monitor.getItem()
   const { cardID, index } = props
 
-  hoverItem.hoverID = cardID
-  
   // ignore self-hover
   if (hoverItem.cardID === cardID) return
 
-  // set index
+  // set hoverID (id of card that is being hovered)
+  hoverItem.hoverID = cardID
+  
+  // set index (index of card that is being hovered)
   hoverItem.hoverIndex = index
   
-  // Set preview index according to hover position relative to component
+  // Decide preview index according to hover position relative to component (draw preview over or under element)
   const hoveredBoundingRect = findDOMNode(component).getBoundingClientRect()   // Determine rectangle on screen
   const hoveredMiddleY = (hoveredBoundingRect.bottom - hoveredBoundingRect.top) / 2   // Get vertical middle
   const mousePosition = monitor.getClientOffset()   // Determine mouse position
@@ -57,8 +58,9 @@ const hoverHandler = throttle( (props, monitor, component) => {
   // hovering top half 
   if (mouseToTop < hoveredMiddleY ) {
     hoverItem.previewIndex = index
-  } else // hovering bottom half
-  hoverItem.previewIndex = index + 1
+  } else { // hovering bottom half
+    hoverItem.previewIndex = index + 1
+  }
 
 }, 50, { leading: true, trailing: false })
 

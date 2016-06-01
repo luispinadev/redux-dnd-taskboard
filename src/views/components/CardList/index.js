@@ -12,10 +12,14 @@ export default compose(
   setDisplayName('CardList'),
   
   connect(
-    (state, props) => ({
-      cards: state.getIn(['cardsByBoard', props.boardID]),
-      dragOrigin: state.getIn(['app', 'dragData', 'boardID'])
-    }),
+    (state, props) => {
+      const dragData = state.getIn(['app', 'dragData'])
+      return {
+        cards: state.getIn(['cardsByBoard', props.boardID]),
+        dragOrigin: dragData.get('boardID'),
+        dragIndex: dragData.get('index')
+      }
+    },
     (dispatch, props) => ({
       deleteCard: (cardID) => {
         dispatch( deleteCard({ cardID, boardID: props.boardID }) )
