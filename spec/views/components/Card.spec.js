@@ -105,7 +105,22 @@ describe('Components:: Card', function(){
       expect( handler.called ).to.be.true
     })
 
-  })  
+  })
+
+  describe('dndCardHOC',function(){
+
+    describe('drag source',function(){
+      it('handles beginDrag')
+      it('handles isDragging')
+      it('handles endDrag')
+    })
+
+    describe('drop target',function(){
+      it('handles hover')
+      it('handles drop')
+    })
+
+  })
 
 
 })

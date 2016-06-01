@@ -24,5 +24,6 @@ describe('Enhancers:: modal', function(){
   //   expect( wrapper.find('.'+styles.backdrop) ).to.have.length(1)
   // })
 
+  // etc.. for other possible options
 })
 

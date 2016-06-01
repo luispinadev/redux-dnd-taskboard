@@ -4,7 +4,7 @@ import app from 'reducers/app'
 import * as actionCreators from 'actions'
 import { DraggingCard } from 'records'
 
-describe('Reducer:: boards', function(){
+describe('Reducer:: app', function(){
   
   let initialState
   let finalState
@@ -18,7 +18,7 @@ describe('Reducer:: boards', function(){
 
   it('returns expected initial state', function(){
     finalState = app( undefined, {})
-    expect(finalState).to.equal( Map({ isDragging: false, dragData: null }) )
+    expect(finalState).to.equal( Map({ isDragging: false, dragData: new DraggingCard() }) )
   })
 
   it('handles APP_START_DRAG', function(){

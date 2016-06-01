@@ -35,11 +35,13 @@ const dragSource = {
 // ------------------------------------------------------------------------------
 
 // mutates monitor item 'hoverItem' and 'hoverIndex' acording to hovered element
-// the monitor item will be read by CardList to determine wether to draw the hover preview
-const throttledHoverHandler =  throttle( (props, monitor, component) => {
+// the monitor item will be read by CardList to determine wether and where to draw the hover preview
+const hoverHandler = throttle( (props, monitor, component) => {
   let hoverItem = monitor.getItem()
   const { cardID, index } = props
 
+  hoverItem.hoverID = cardID
+  
   // ignore self-hover
   if (hoverItem.cardID === cardID) return
 
@@ -58,17 +60,11 @@ const throttledHoverHandler =  throttle( (props, monitor, component) => {
   } else // hovering bottom half
   hoverItem.previewIndex = index + 1
 
-}, 30, { leading: true, trailing: false })
+}, 50, { leading: true, trailing: false })
 
 const dropTarget = {
   hover(props, monitor, component) {
-    throttledHoverHandler(props, monitor, component)
-  },
-
-  // The returned obj will be catched by target CardList's drop handler.
-  drop(props, monitor){
-    const { cardID, hoverIndex } = monitor.getItem()    
-    return { droppedOver: dragTypes.CARD, cardID, hoverIndex }
+    hoverHandler(props, monitor, component)
   }
 }
 
