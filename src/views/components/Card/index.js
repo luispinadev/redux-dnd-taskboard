@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { editCard } from 'actions'
 
 import Card from './Card'
+import {cardSelector} from 'selectors'
 import EditingCard from './EditingCard'
 import dndCardHOC from './dndCardHOC'
 
@@ -12,9 +13,7 @@ export default compose(
   setDisplayName('Card'),
 
   connect(
-    (state, props) => ({
-      text: state.get('cards').get(props.cardID).get('text')
-    }),
+    cardSelector,
     (dispatch, props) => ({
       setText: (text) => {
         if (props.isEditing) props.editDone()

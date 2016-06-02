@@ -21,8 +21,8 @@ module.exports = {
       'constants': path.join(__dirname, 'src/constants'),
       'records': path.join(__dirname, 'src/records'),
       'reducers': path.join(__dirname, 'src/reducers'),
-      // 'sagas': path.join(__dirname, 'src/sagas'),
-      // 'selectors': path.join(__dirname, 'src/selectors'),
+      'sagas': path.join(__dirname, 'src/sagas'),
+      'selectors': path.join(__dirname, 'src/selectors'),
       'shared-styles': path.join(__dirname, 'src/shared-styles'),
       'store': path.join(__dirname, 'src/store'),
       'views': path.join(__dirname, 'src/views')

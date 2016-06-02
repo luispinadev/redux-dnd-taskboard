@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
 import Board from './Board'
+import {boardSelector} from 'selectors'
 
 export default compose(
   DragDropContext(HTML5Backend),
@@ -14,9 +15,7 @@ export default compose(
   setDisplayName('Board'),
   
   connect(
-    (state, props) => ({
-      title: state.get('boards').get(props.boardID).get('title')
-    }),
+    boardSelector,
     (dispatch, props) => ({
       createCard: (text) => dispatch( createCard({ boardID: props.boardID, text }) )
     })

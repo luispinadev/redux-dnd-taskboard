@@ -54,7 +54,7 @@ export default (WrappedComponent) =>
       updateHoverData: data =>{
         setHoverData(data)
       },
-      resetHoverData: () => { setHoverData(Map()) },
+      resetHoverData: () => setHoverData(Map()),
       cards, ...rest
     })),
 
@@ -71,24 +71,25 @@ export default (WrappedComponent) =>
       this.state = { cards: props.cards }
     }
 
-    // Manage hoverData and state.cards
+    // Manage hoverData and state.cards according to drag and drop state
     componentWillReceiveProps({boardID, dragOrigin, dragIndex, isOver, cards, resetHoverData, hoverData}){
       const props = this.props
-      
-      // if hovered item 'leaving' board area, clear hoverData
-      if (!isOver && props.isOver || cards !== props.cards) resetHoverData()
+      // Manage preview based on hover data 
 
+      // if hovered item 'leaving' board area, clear hoverData
+      if (!isOver && props.isOver) resetHoverData()
       // Setup preview inside cards list
       else if (hoverData.isEmpty()){ // if no hoverData, display original cards list from props
         this.setState({ cards: cards })
       } else {
-        const previewIndex = hoverData.get('previewIndex')
-        if (dragOrigin === boardID){
-          // also hide original card if it belongs to this board
-          this.setState({ 
-            cards: cards.remove(dragIndex).insert(hoverData.get('previewIndex'), hoverData.get('cardID') )
-          })
-        } else this.setState({ cards: cards.insert(hoverData.get('previewIndex'), hoverData.get('cardID') ) })
+        const hoverIndex = hoverData.get('previewIndex')
+        if ( 
+          dragOrigin !== boardID || // if same board, prevent contiguous preview
+          ( 
+            hoverIndex !== dragIndex + 1 &&
+            hoverIndex !== dragIndex
+          )
+        ) this.setState({ cards: cards.insert(hoverIndex, hoverData.get('cardID') ) })
       }
 
     }

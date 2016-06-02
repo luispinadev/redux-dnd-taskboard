@@ -50,7 +50,7 @@ module.exports =  _.merge({
           loader: 'style!css?localIdentName=[path][name]---[local]---[hash:base64:5]&modules&importLoaders=1!postcss!stylus',
           exclude: /node_modules/
         }
-      ]
+      ],
 
     },
     // enzyme
@@ -59,7 +59,17 @@ module.exports =  _.merge({
       'react/addons': true,
       'react/lib/ExecutionEnvironment': true,
       'react/lib/ReactContext': true
-    }
+    },
+
+    eslint: { // globals for mocha / sinon / chai etc..
+      "globals": [
+        "describe",
+        "it",
+        "sinon",
+        "expect",
+        "afterEarch"
+      ]
+    },
   
   },
   _.omit(['devtool','entry','module'], config), {}

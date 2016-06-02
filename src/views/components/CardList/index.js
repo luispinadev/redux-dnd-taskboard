@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { deleteCard, moveCard, startDrag, endDrag } from 'actions'
 
 import CardList from './CardList'
+import {cardListSelector} from 'selectors'
 import dndCardListHOC from './dndCardListHOC'
 
 export default compose(
@@ -12,14 +13,7 @@ export default compose(
   setDisplayName('CardList'),
   
   connect(
-    (state, props) => {
-      const dragData = state.getIn(['app', 'dragData'])
-      return {
-        cards: state.getIn(['cardsByBoard', props.boardID]),
-        dragOrigin: dragData.get('boardID'),
-        dragIndex: dragData.get('index')
-      }
-    },
+    cardListSelector,
     (dispatch, props) => ({
       deleteCard: (cardID) => {
         dispatch( deleteCard({ cardID, boardID: props.boardID }) )

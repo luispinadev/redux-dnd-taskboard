@@ -9,7 +9,7 @@ import CreateBoardControl from './CreateBoardControl'
 export default compose(  
   setDisplayName('CreateBoardControl'),
 
-  connect(),
+  connect(), // used to put dispatch func in props
 
   pure,
   

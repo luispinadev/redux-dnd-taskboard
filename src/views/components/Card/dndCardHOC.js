@@ -26,7 +26,9 @@ const dragSource = {
     return props.cardID === monitor.getItem().cardID
   },
 
-  endDrag(props, monitor) { props.endDrag() }
+  endDrag(props) { 
+    props.endDrag()
+  }
 
 }
 
@@ -88,9 +90,9 @@ export default (WrappedComponent) =>
       isDragging: monitor.isDragging()
     }))
 
-  )( ({ connectDropTarget, connectDragSource, ...rest}) =>
+  )( ({ connectDropTarget, connectDragSource, isDragging, ...rest}) =>
     connectDropTarget(connectDragSource(
-      <div>
+      <div style={ isDragging ? { opacity: 0.4 } : null }>
         <WrappedComponent {...rest} />
       </div>
     ))
