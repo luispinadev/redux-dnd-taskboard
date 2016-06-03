@@ -8,6 +8,7 @@ The test stack is karma+mocha+chai+sinon+enzyme, and I'm using webpack as bundli
 
 
 ### Running the project:
+Install modules with 'npm i', then:  
 
 * 'npm run start' will start dev server and webpack autobuild  
 * 'npm run test' will run karma test suite  
