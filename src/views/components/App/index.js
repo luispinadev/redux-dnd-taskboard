@@ -1,6 +1,7 @@
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { compose, pure, setPropTypes, setDisplayName, lifecycle } from 'recompose'
 import { connect } from 'react-redux'
+import { PropTypes } from 'react'
 
 import App from './App'
 import {appSelector} from 'selectors'
@@ -17,7 +18,8 @@ export default compose(
   
   setPropTypes({
     // Injected by Redux
-    dashboard: ImmutablePropTypes.list.isRequired
+    dashboard: ImmutablePropTypes.list.isRequired,
+    isLoading: PropTypes.bool.isRequired
   }),
 
   // TD: branch for app loading?

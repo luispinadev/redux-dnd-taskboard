@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from 'classnames'
+import classnames from 'classnames'
 import styles from './modal.styl'
 
 export default (WrappedComponent, {
@@ -18,7 +18,7 @@ export default (WrappedComponent, {
       style={ {opacity: backdropOpacity }}
       onClick={closeOnBackdropClick && props[closeCallbackName]}
     />
-    <div className={classNames(containerClass, { [styles.isFixed]: isFixed })}>
+    <div className={classnames(containerClass, { [styles.isFixed]: isFixed })}>
       { showCloseButton && <div onClick={ props[closeCallbackName] } >{closeButton}</div> }
       <WrappedComponent {...props} />
     </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 
 import styles from './Card.styl'
 import ControlledInput from 'views/components/ControlledInput'
@@ -7,7 +8,7 @@ export default ({ text, onSave, onCancel, setInputText }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container} >
-        <ControlledInput className={styles.text} placeholder="write here"
+        <ControlledInput className={classnames(styles.text, styles.input)} placeholder="write here"
           initVal={text}
           changeHandler={setInputText} 
         />

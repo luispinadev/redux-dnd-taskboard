@@ -2,25 +2,25 @@
 
 $card-height = 14px
 $card-bg-color = #FBFBFB
-$card-border-color = #AAF9AA
-$card-selected-bg-color = #FFFFFF
-$card-disabledOpacity = 0.3
-$card-draggedOpacity = 0.3
-$card-previewOpacity = 0.15
-$card-preview-border-col = #716E6E
+$card-border-color = #D7F1D7
+$card-v-padding = 7px
+$card-text-w = 206px
+$card-text-fontsize = 12px
+
 
 // ------------------------------------------------------------------------------
 // Card container
 
 .wrapper
-  padding $global-v-board-padding $global-h-board-padding 0 $global-h-board-padding
+  padding $card-v-padding $global-h-board-padding $card-v-padding $global-h-board-padding
 .container
-  min-height $card-height
+  min-height $card-height + 4
   color $global-c-grey-text
   border solid 1px $card-border-color
   line-height $card-height
   background-color $card-bg-color
-  cursor pointer
+  font-size $card-text-fontsize
+  cursor grab
   &:active
     cursor grabbing
   &:hover
@@ -29,48 +29,32 @@ $card-preview-border-col = #716E6E
   &:hover .icon
     color $global-c-grey-text
 
-// .isDragged
-//   opacity $card-draggedOpacity
-  
-// .isPreview
-//   border solid 1px $card-preview-border-col
-//   opacity $card-previewOpacity
-
 
 // ------------------------------------------------------------------------------
 // Card content
 
 .text
   display inline-block
-  overflow hidden
-  text-overflow ellipsis
+  white-space normal
+  width 206px
   padding-left 4px
-  max-width 130px
-  font-size 12px
 
+.input
+  color $global-c-blue-text
+  background transparent
+  border none
+  &:focus, &:active
+    border none
+    outline none
 
 // Card action buttons
-
 .controlsBlock
   float right
-  // position absolute
-  // top 0
-  // right 0
-  // bottom 0
-
-  // :hover
-  //   width 40px
-  //   background-color red
-// .disabledIcon
-//   padding 5px
-//   color $global-c-icon-inactive
-//   cursor default
 
 .icon
   padding 0 5px 0 0
-  cursor pointer
-  font-size 12px
   color $global-c-icon-inactive
+  cursor pointer
   // &:hover
   //   text-shadow 0 0 10px #5BE414
   &:active
