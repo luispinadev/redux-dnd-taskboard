@@ -13,12 +13,12 @@ export default ({ dashboard, isLoading }) =>
     <div>Loading</div>
     
     :
-    
-    <div className={styles.boardsContainer} >
+    <div>
       <CreateBoardControl />
-      { dashboard.map( (boardID, i) => <Board key={i} boardID={boardID} />) }
+      <div className={styles.boardsContainer} >
+        { dashboard.map( (boardID, i) => <Board key={i} boardID={boardID} />) }
+      </div>
     </div>
-
   }
   
 </div>

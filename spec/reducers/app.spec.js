@@ -18,7 +18,7 @@ describe('Reducer:: app', function(){
 
   it('returns expected initial state', function(){
     finalState = app( undefined, {})
-    expect(finalState).to.equal( Map({ isLoading: false, isDragging: false, dragData: new DraggingCard() }) )
+    expect(finalState).to.equal( Map({ isLoading: true, isDragging: false, dragData: new DraggingCard() }) )
   })
 
   it('handles APP_LOAD_REQUEST')

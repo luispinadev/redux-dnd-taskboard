@@ -1,9 +1,8 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import CreateCardControl from 'views/components/CreateCardControl/CreateCardControl'
 import EditingCard from 'views/components/Card/EditingCard'
-import { ModalCard } from 'views/components/CreateCardControl'
 import styles from 'views/components/CreateCardControl/createCardControl.styl'
 
 describe('Components:: CreateCardControl', function(){
@@ -27,12 +26,11 @@ describe('Components:: CreateCardControl', function(){
     expect( handler.called ).to.be.true
   })
 
-  // NOT WORKING with Card wrapped by modal HOC..
-  it('Renders a modal wrapped EditingCard component in editing state when "isCreating" === true', function(){
-    // const ModalCard = modal(EditingCard, {})({})
-    const wrapper = shallow(<CreateCardControl {...props} isCreating={true} />)
+  it('Renders a modal wrapped EditingCard component when "isCreating" === true', function(){
 
-    expect( wrapper.find(ModalCard) ).to.have.length(1)
+    const wrapper = mount(<CreateCardControl {...props} isCreating={true} />)
+
+    expect( wrapper.find('.'+styles.cardInput) ).to.have.length(1)
   })
 
 

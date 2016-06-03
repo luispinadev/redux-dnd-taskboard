@@ -3,8 +3,7 @@
 $card-height = 14px
 $card-bg-color = #FBFBFB
 $card-border-color = #D7F1D7
-$card-v-padding = 7px
-$card-text-w = 206px
+$card-text-w = 203px
 $card-text-fontsize = 12px
 
 
@@ -12,8 +11,9 @@ $card-text-fontsize = 12px
 // Card container
 
 .wrapper
-  padding $card-v-padding $global-h-board-padding $card-v-padding $global-h-board-padding
+  padding $global-card-v-padding $global-h-board-padding $global-card-v-padding $global-h-board-padding
 .container
+  display flex
   min-height $card-height + 4
   color $global-c-grey-text
   border solid 1px $card-border-color
@@ -36,20 +36,21 @@ $card-text-fontsize = 12px
 .text
   display inline-block
   white-space normal
-  width 206px
+  flex 1 1 auto
   padding-left 4px
 
 .input
   color $global-c-blue-text
   background transparent
   border none
+  // width 200px
   &:focus, &:active
     border none
     outline none
 
 // Card action buttons
 .controlsBlock
-  float right
+  padding-left 4px
 
 .icon
   padding 0 5px 0 0
