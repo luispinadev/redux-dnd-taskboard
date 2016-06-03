@@ -18,8 +18,12 @@ describe('Reducer:: app', function(){
 
   it('returns expected initial state', function(){
     finalState = app( undefined, {})
-    expect(finalState).to.equal( Map({ isDragging: false, dragData: new DraggingCard() }) )
+    expect(finalState).to.equal( Map({ isLoading: false, isDragging: false, dragData: new DraggingCard() }) )
   })
+
+  it('handles APP_LOAD_REQUEST')
+  it('handles APP_LOAD_SUCCESS')
+  it('handles APP_LOAD_FAILURE')
 
   it('handles APP_START_DRAG', function(){
     const action = actionCreators.startDrag({ cardID: 'cid', index: 1, boardID: 'bid'})

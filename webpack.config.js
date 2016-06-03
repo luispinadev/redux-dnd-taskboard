@@ -17,7 +17,7 @@ module.exports = {
     alias: {
       'config': path.join(__dirname, 'config'),
       'actions': path.join(__dirname, 'src/actions'),
-      // 'api': path.join(__dirname, 'src/api'),
+      'api': path.join(__dirname, 'src/api'),
       'constants': path.join(__dirname, 'src/constants'),
       'records': path.join(__dirname, 'src/records'),
       'reducers': path.join(__dirname, 'src/reducers'),

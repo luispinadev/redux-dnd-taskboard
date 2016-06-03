@@ -21,6 +21,15 @@ describe('Reducer:: cardsByBoard', function(){
     expect(finalState).to.equal( Map() )
   })
 
+  it('handles APP_LOAD_SUCCESS', function(){
+    initialState = Map()
+    finalState = cardsByBoard( initialState, actionCreators.appLoadSuccess({
+      cardsByBoard: { '123': [], abc: ['12']}
+    }))
+
+    expect(finalState).to.equal( fromJS({ '123': [], abc: ['12']}) )
+  })
+
   it('handles CARD_CREATE', function(){
     initialState = fromJS({ '123': [] })
     finalState = cardsByBoard( initialState, actionCreators.createCard({

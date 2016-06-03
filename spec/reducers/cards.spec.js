@@ -24,6 +24,14 @@ describe('Reducer:: cards', function(){
     expect(finalState).to.equal( Map() )
   })
 
+  it('handles APP_LOAD_SUCCESS', function(){
+    initialState = Map()
+    action = actionCreators.appLoadSuccess({ cards: [ { cardID: 'card12', text: 'Lorem'} ]})
+    finalState = cards(initialState, action)
+
+    expect(finalState).to.equal( Map({ card12: new Card({ cardID: 'card12', text: 'Lorem'}) }) )
+  })
+
   it('handles CARD_CREATE', function(){
     initialState = Map()
     action = actionCreators.createCard()

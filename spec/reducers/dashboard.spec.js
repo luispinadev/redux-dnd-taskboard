@@ -21,6 +21,13 @@ describe('Reducer:: dashboard', function(){
     expect(finalState).to.equal( List() )
   })
 
+  it('handles APP_LOAD_SUCCESS', function(){
+    initialState = List()
+    finalState = dashboard( initialState, actionCreators.appLoadSuccess({ dashboard: ['1', '2'] }))
+
+    expect(finalState).to.equal( List(['1', '2']) )
+  })
+
   describe('board MGMT', function(){
 
     it('adds board ID to dashboard on BOARD_CREATE', function(){

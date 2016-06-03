@@ -107,15 +107,15 @@ describe('Components:: Card', function(){
 
   })
 
-  describe('dndCardHOC',function(){
+  describe('dndCardHOC', function(){
 
-    describe('drag source',function(){
+    describe('drag source', function(){
       it('handles beginDrag')
       it('handles isDragging')
       it('handles endDrag')
     })
 
-    describe('drop target',function(){
+    describe('drop target', function(){
       it('handles hover')
       it('handles drop')
     })

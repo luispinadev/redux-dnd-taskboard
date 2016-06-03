@@ -24,6 +24,13 @@ describe('Reducer:: boards', function(){
     expect(finalState).to.equal( Map() )
   })
 
+  it('handles APP_LOAD_SUCCESS', function(){
+    initialState = Map()
+    finalState = boards( initialState, actionCreators.appLoadSuccess({ boards: [ { boardID: 'board3', title: 'Donezo', cards: [] } ]}))
+
+    expect(finalState).to.equal( Map({ board3: new Board({ boardID: 'board3', title: 'Donezo', cards: [] }) }) )
+  })
+
   it('handles BOARD_CREATE', function(){
     initialState = Map()
     finalState = boards( initialState, actionCreators.createBoard())

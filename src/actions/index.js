@@ -16,11 +16,13 @@ export const idGenHelper = (idAttribute) =>
 
 
 // App
+
+export const appLoadRequest = createAction(actionTypes.APP_LOAD_REQUEST)
+export const appLoadSuccess = createAction(actionTypes.APP_LOAD_SUCCESS)
+export const appLoadFailure = createAction(actionTypes.APP_LOAD_FAILURE)
+
 export const startDrag = createAction(actionTypes.APP_START_DRAG)
 export const endDrag = createAction(actionTypes.APP_END_DRAG)
-// export const appLoadRequest = createAction(actionTypes.APP_LOAD_REQUEST)
-// export const appLoadSuccess = createAction(actionTypes.APP_LOAD_SUCCESS)
-// export const appLoadFailure = createAction(actionTypes.APP_LOAD_FAILURE)
 
 // Board
 export const createBoard = createAction(actionTypes.BOARD_CREATE, idGenHelper('boardID') )

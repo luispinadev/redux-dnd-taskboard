@@ -4,7 +4,7 @@
 // Store data selectors used by components
 // ------------------------------------------------------------------------------
 
-export const appSelector = state => ({ dashboard: state.get('dashboard') })
+export const appSelector = state => ({ isLoading: state.getIn(['app', 'isLoading']), dashboard: state.get('dashboard') })
 
 export const boardSelector = (state, props) => ({
   title: state.get('boards').get(props.boardID).get('title')
