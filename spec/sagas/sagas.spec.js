@@ -1,8 +1,8 @@
 import * as actionTypes from 'constants/actionTypes'
-// import Api from 'api'
+import Api from 'api'
 import { Map } from 'immutable'
 import { put, call } from 'redux-saga/effects'
-// import { fetchAppData } from 'sagas'
+import { fetchAppData } from 'sagas'
 
 describe('Sagas::', function(){
 
@@ -13,48 +13,54 @@ describe('Sagas::', function(){
 
   describe('fetchAppData', function(){
 
-    // it('yields parallel calls to api getAccountData and getCardata', function(){
-    //   generator = fetchAppData()
-    //   output = generator.next().value
-    //   expect( output ).to.deep.equal( [call(Api.getAccountData), call(Api.getCardata)] )  
-    // })
+    it('yields parallel calls to api getBoards and getCards', function(){
+      generator = fetchAppData()
+      output = generator.next().value
+      expect( output ).to.deep.equal( [call(Api.getBoards), call(Api.getCards)] )  
+    })
 
-    // it('creates full app state on APP_LOAD_SUCCESS')
+    describe('then it either', function(){
 
-    // describe('then it either', function(){
-
-    //   beforeEach(function() {
-    //     // move generator to relevant iteration (after it has received call result)
-    //     generator = fetchAppData()
-    //     generator.next()
-    //   })
+      beforeEach(function() {
+        // move generator to relevant iteration (after it has received call result)
+        generator = fetchAppData()
+        generator.next()
+      })
 
 
-    //   it('puts an APP_LOAD_SUCCESS (payload: {merged data})', function(){
-    //     // test does not work with nested immutable despite chai-immutable, so using regular obj
-    //     // (expected behaviour according to https://github.com/astorije/chai-immutable/issues/34)
-    //     dummyData = [ Map({prop1: {}, prop2: {} }), Map({prop3: {}, prop4: [] }) ]
+      it('puts an APP_LOAD_SUCCESS (payload: {reduced data})', function(){
+        dummyData = [
+          [
+            { boardID: 'board1', title: 'To Do', cards: ['card1'] },
+            { boardID: 'board2', title: 'In Progress', cards: ['card2'] },
+          ],
+          [ { cardID: 'card1', text: 'one' }, { cardID: 'card2', text: 'two' } ]
+        ]
 
-    //     output = generator.next(dummyData).value
-    //     output.PUT.payload = output.PUT.payload.toJS() // convert immutable record to js
-        
-    //     dummyData = dummyData[0].merge(dummyData[1])
+        const expected = {
+          cardsByBoard: { board1: ['card1'], board2: ['card2'] },
+          boards: [ { boardID: 'board1', 'title': 'To Do' }, { 'boardID': 'board2', 'title': 'In Progress' }],
+          dashboard: ['board1', 'board2'],
+          cards: [{cardID: 'card1', 'text': 'one'}, {'cardID': 'card2', 'text': 'two'}]
+        }
 
-    //     expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_SUCCESS, payload: dummyData.toJS() }) )  
-    //   })
+        output = generator.next(dummyData).value
 
-    //   it('ignores (be done) on a MANUAL_CANCEL type error', function(){
-    //     output = generator.throw({ type: 'MANUAL_CANCEL' })
-    //     expect( output ).to.deep.equal({ value: undefined, done: true })
-    //   })
+        expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_SUCCESS, payload: expected }) )  
+      })
 
-    //   it('puts an APP_LOAD_FAILURE on thrown error', function(){
-    //     dummyData = { type: 'some error' }
-    //     output = generator.throw(dummyData).value
-    //     expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_FAILURE, payload: dummyData.type }) )  
-    //   })
+      it('ignores (is done) on a MANUAL_CANCEL type error', function(){
+        output = generator.throw({ type: 'MANUAL_CANCEL' })
+        expect( output ).to.deep.equal({ value: undefined, done: true })
+      })
 
-    // })
+      it('puts an APP_LOAD_FAILURE on thrown error', function(){
+        dummyData = { type: 'some error' }
+        output = generator.throw(dummyData).value
+        expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_FAILURE, payload: dummyData.type }) )  
+      })
+
+    })
 
   })
 
