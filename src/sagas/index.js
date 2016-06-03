@@ -1,9 +1,7 @@
 import { takeLatest, takeEvery } from 'redux-saga'
 import { call, fork, put } from 'redux-saga/effects'
 import Api from 'api'
-import {
-  APP_LOAD_SUCCESS, APP_LOAD_FAILURE, APP_LOAD_REQUEST
-} from 'constants/actionTypes'
+import { APP_LOAD_REQUEST } from 'constants/actionTypes'
 import { appLoadSuccess, appLoadFailure } from 'actions'
 
 

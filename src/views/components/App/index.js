@@ -23,8 +23,8 @@ export default compose(
   // TD: branch for app loading?
 
   lifecycle({
-    componentDidMount() {
-     this.props.appLoadRequest()
+    componentDidMount() { 
+      this.props.appLoadRequest()
     }
   })
 
