@@ -6,7 +6,8 @@ import {
   APP_LOAD_SUCCESS,
   CARD_CREATE_REQUEST, CARD_CREATE_FAILURE,
   CARD_DELETE_SUCCESS, 
-  CARD_MOVE, BOARD_CREATE, BOARD_DELETE } from 'constants/actionTypes'
+  CARD_MOVE_REQUEST, CARD_MOVE_FAILURE,
+  BOARD_CREATE, BOARD_DELETE } from 'constants/actionTypes'
 
 // ------------------------------------------------------------------------------
 // Composable helpers
@@ -32,8 +33,11 @@ const deleteCardFromBoard = ({ cardID, boardID, state, ...rest }) => ({
 // ------------------------------------------------------------------------------
 
 export default handleActions({
+  
+  // App load
   [APP_LOAD_SUCCESS]: (state, { payload }) =>  fromJS(payload.cardsByBoard),
 
+  // Card create
   [CARD_CREATE_REQUEST]: (state, { payload }) =>
     state.updateIn([payload.boardID], l => 
       payload.hasOwnProperty('index') ? 
@@ -41,14 +45,25 @@ export default handleActions({
     ),
   [CARD_CREATE_FAILURE]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
 
+  // Card delete
   [CARD_DELETE_SUCCESS]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
 
-  [CARD_MOVE]: (state, { payload }) =>
+  // Card move
+  [CARD_MOVE_REQUEST]: (state, { payload }) =>
     payload.hasOwnProperty('index') ?
       compose(addCardToIndex, removeCardFromOrigin)({ state, ...payload }).state :
-      compose(addCardToBottom, removeCardFromOrigin)({ state, ...payload }).state
-  ,
+      compose(addCardToBottom, removeCardFromOrigin)({ state, ...payload }).state,
+
+  [CARD_MOVE_FAILURE]: (state, { payload }) => {
+    const reversedBoards = { cardID: payload.cardID, destID: payload.origID, origID: payload.destID }
+    return payload.hasOwnProperty('index') ?
+      compose(addCardToIndex, removeCardFromOrigin)({ state, ...reversedBoards, index: payload.index }).state :
+      compose(addCardToBottom, removeCardFromOrigin)({ state, ...reversedBoards }).state
+  },
+
+  // Board
   [BOARD_CREATE]: (state, { payload }) => state.set(payload.boardID, List() ),
   [BOARD_DELETE]: (state, { payload }) => state.delete(payload.boardID)
 }, Map() )
+
 

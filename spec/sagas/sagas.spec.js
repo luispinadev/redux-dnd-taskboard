@@ -1,7 +1,7 @@
 import * as actionTypes from 'constants/actionTypes'
 import { put, call } from 'redux-saga/effects'
 import * as Api from 'api'
-import { fetchAppData, createCard } from 'sagas'
+import { fetchAppData, identityPutRoutine } from 'sagas'
 
 describe('Sagas::', function(){
 
@@ -62,85 +62,44 @@ describe('Sagas::', function(){
 
   })
 
-  describe('handles CARD_CREATE_REQUEST', function(){
+  describe('identityPutRoutine handler for CREATE -> SUCCESS || FAILURE actions', function(){
 
     let generator
     let output
+    const action = { type: 'ACTION_REQUEST', payload: 'payload data' }
+    const apiCall = payload => new Promise( res => setTimeout(res, 0) ).then( () => payload)
+    const successActionCreator = (payload) => ({ type: 'ACTION_SUCCESS', payload })
+    const failureActionCreator = (payload) => ({ type: 'ACTION_FAILURE', payload })
 
-    it('yields a call to api.createCard', function(){
+    it('yields a call to apiCall method', function(){
 
-      generator = createCard({ payload: { cardID: '123' } })
+      generator = identityPutRoutine(action, apiCall, successActionCreator, failureActionCreator)
       output = generator.next().value
 
-      expect( output ).to.deep.equal( call(Api.createCard, { cardID: '123' } ) )
+      expect( output ).to.deep.equal( call(apiCall, 'payload data') )
     })
 
     describe('then it either', function(){
 
       // move generator to second step
       beforeEach(function() {
-        generator = createCard({ payload: { cardID: '123' } })
+        generator = identityPutRoutine(action, apiCall, successActionCreator, failureActionCreator)
         generator.next()
       })
 
-      it('puts a CARD_CREATE_SUCCESS', function(){
-        output = generator.next({ cardID: '123' }).value
+      it('puts a ACTION_SUCCESS', function(){
+        output = generator.next('payload data').value
 
-        expect( output ).to.deep.equal( put({ type: actionTypes.CARD_CREATE_SUCCESS, payload: { cardID: '123' } }) )  
+        expect( output ).to.deep.equal( put({ type: 'ACTION_SUCCESS', payload: 'payload data' }) )  
       })
 
-      it('puts a CARD_CREATE_FAILURE on thrown error', function(){
-        output = generator.throw({ cardID: '123' }).value
+      it('puts a ACTION_FAILURE on thrown error', function(){
+        output = generator.throw('some error').value
           
-        expect( output ).to.deep.equal( put({ type: actionTypes.CARD_CREATE_FAILURE, payload: { cardID: '123' } }) )
+        expect( output ).to.deep.equal( put({ type: 'ACTION_FAILURE', payload: 'some error' }) )
       })
 
     })
-  })
-
-  describe('moveCard', function(){
-
-    it('yields a call to api.moveCard')
-
-    describe('then it either', function(){
-      it('puts an CARD_MOVE_SUCCESS on success')
-      it('puts an CARD_MOVE_FAILURE on thrown error')
-    })
-
-  })
-
-  describe('deleteCard', function(){
-
-    it('yields a call to api.deleteCard')
-
-    describe('then it either', function(){
-      it('puts an CARD_DELETE_SUCCESS on success')
-      it('puts an CARD_DELETE_FAILURE on thrown error')
-    })
-  
-  })
-
-
-  describe('createBoard', function(){
-
-    it('yields a call to api.createBoard')
-
-    describe('then it either', function(){
-      it('puts an BOARD_CREATE_SUCCESS on success')
-      it('puts an BOARD_CREATE_FAILURE on thrown error')
-    })
-
-  })
-
-  describe('deleteBoard', function(){
-
-    it('yields a call to api.createBoard')
-
-    describe('then it either', function(){
-      it('puts an BOARD_DELETE_SUCCESS on success')
-      it('puts an BOARD_DELETE_FAILURE on thrown error')
-    })
-
   })
 
 })

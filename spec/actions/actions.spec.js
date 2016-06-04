@@ -101,17 +101,6 @@ describe('Actions::', function(){
   // Cards
   // ------------------------------------------------------------------------------
 
-  
-  // Card create
-
-  // describe('sync createCard (DEPRECATED)', function(){
-  //   it('returns a CARD_CREATE type action', function(){
-  //     action = actionCreators.createCard({ cardID: '123' })
-  //     expected = { type: 'CARD_CREATE', payload: { cardID: '123' } }
-  //     expect(action).to.deep.equal(expected)
-  //   })
-  // })
-
   describe('createCard', function(){
 
     it('Request returns a CARD_CREATE_REQUEST type action', function(){
@@ -135,12 +124,6 @@ describe('Actions::', function(){
   })
 
   describe('moveCard', function(){
-
-    it('returns a CARD_MOVE type action', function(){
-      action = actionCreators.moveCard({ cardID: '123', 'boardID': 'bID' })
-      expected = { type: 'CARD_MOVE', payload: { cardID: '123', 'boardID': 'bID' } }
-      expect(action).to.deep.equal(expected)
-    })
   
     it('returns a CARD_MOVE_REQUEST type action', function(){
       action = actionCreators.moveCardRequest({ cardID: '123', 'destID:': 'b1', origID: 'b2' })

@@ -87,6 +87,34 @@ describe('Reducer:: cards', function(){
     
   })
 
+  describe('card move', function(){
+
+    it('handles CARD_MOVE_REQUEST', function(){
+      initialState = Map({ 123: new Card({ cardID: '123', pending: false}) })
+      action = actionCreators.moveCardRequest({ cardID: '123'})
+      finalState = cards(initialState, action)
+
+      expect(finalState.get(action.payload.cardID)).to.equal( new Card({pending: true, ...action.payload}) )
+    })
+
+    it('handles CARD_MOVE_SUCCESS', function(){
+      initialState = Map({ 123: new Card({ cardID: '123'}) })
+      action = actionCreators.moveCardSuccess({ cardID: '123'})
+      finalState = cards(initialState, action)
+
+      expect(finalState.get(action.payload.cardID)).to.equal( new Card({pending: false, ...action.payload}) )
+    })
+
+    it('handles CARD_MOVE_FAILURE', function(){
+      initialState = Map({ 123: new Card({ cardID: '123', pending: true}) })
+      action = actionCreators.moveCardFailure({ cardID: '123'})
+      finalState = cards(initialState, action)
+
+      expect(finalState.get(action.payload.cardID)).to.equal( new Card({pending: false, ...action.payload}) )
+    })
+    
+  })
+
 
   it('handles CARD_EDIT', function(){
     initialState = Map({ '123': new Card({ cardID: '123', text: 'Lorem'}) })
