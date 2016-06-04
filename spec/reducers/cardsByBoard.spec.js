@@ -30,14 +30,24 @@ describe('Reducer:: cardsByBoard', function(){
     expect(finalState).to.equal( fromJS({ '123': [], abc: ['12']}) )
   })
 
-  it('handles CARD_CREATE', function(){
+  it('handles CARD_CREATE_REQUEST', function(){
     initialState = fromJS({ '123': [] })
-    finalState = cardsByBoard( initialState, actionCreators.createCard({
+    finalState = cardsByBoard( initialState, actionCreators.createCardRequest({
       boardID: '123'
     }))
 
     expect(finalState.get('123')).to.have.size(1)
   })
+
+  it('handles CARD_CREATE_FAILURE', function(){
+    initialState = fromJS({ '123': ['cardID'] })
+    finalState = cardsByBoard( initialState, actionCreators.createCardFailure({
+      boardID: '123',
+      cardID: 'abc'
+    }))
+
+    expect(finalState.get('123')).to.be.empty
+  })  
 
   it('handles CARD_DELETE', function(){
     initialState = fromJS({ '123': ['cardID'] })

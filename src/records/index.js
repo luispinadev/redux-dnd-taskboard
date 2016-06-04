@@ -12,9 +12,10 @@ export const Board = new Record({
 
 export const Card = new Record({
   cardID: undefined,
-  text: ''
+  text: '',
+  pending: false
   // date created
-  // is done
+  // color
 })
 
 export const DraggingCard = new Record({

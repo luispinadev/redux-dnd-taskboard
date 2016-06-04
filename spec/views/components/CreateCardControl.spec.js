@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 
 import CreateCardControl from 'views/components/CreateCardControl/CreateCardControl'
-import EditingCard from 'views/components/Card/EditingCard'
 import styles from 'views/components/CreateCardControl/createCardControl.styl'
 
 describe('Components:: CreateCardControl', function(){

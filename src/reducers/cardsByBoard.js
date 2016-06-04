@@ -2,7 +2,10 @@ import { List, Map, fromJS } from 'immutable'
 import { handleActions } from 'redux-actions'
 import compose from 'recompose/compose' // Usualy I'd use lodash's implementation, but I'm already using this one in lots of places
 
-import { APP_LOAD_SUCCESS, CARD_CREATE, CARD_DELETE, CARD_MOVE, BOARD_CREATE, BOARD_DELETE } from 'constants/actionTypes'
+import { 
+  APP_LOAD_SUCCESS,
+  CARD_CREATE_REQUEST, CARD_CREATE_FAILURE,
+  CARD_DELETE, CARD_MOVE, BOARD_CREATE, BOARD_DELETE } from 'constants/actionTypes'
 
 // ------------------------------------------------------------------------------
 // Composable helpers
@@ -27,16 +30,17 @@ const addCardToIndex = ({cardID, destID, index, state, ...rest}) => ({
 
 export default handleActions({
   [APP_LOAD_SUCCESS]: (state, { payload }) =>  fromJS(payload.cardsByBoard),
-  [CARD_CREATE]: (state, { payload }) =>
+
+  [CARD_CREATE_REQUEST]: (state, { payload }) =>
     state.updateIn([payload.boardID], l => 
       payload.hasOwnProperty('index') ? 
         l.insert(payload.index, payload.cardID) : l.unshift(payload.cardID)
     ),
+  [CARD_CREATE_FAILURE]: (state, { payload }) =>
+    state.updateIn([payload.boardID], l => l.delete(l.indexOf(payload.cardID)) ),
 
   [CARD_DELETE]: (state, { payload }) =>
-    state.updateIn([payload.boardID], l => 
-      l.delete(l.indexOf(payload.cardID))
-    ),
+    state.updateIn([payload.boardID], l => l.delete(l.indexOf(payload.cardID)) ),
 
   [CARD_MOVE]: (state, { payload }) =>
     payload.hasOwnProperty('index') ?

@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 // import ImmutablePropTypes from 'react-immutable-proptypes'
 import { compose, pure, setPropTypes, setDisplayName } from 'recompose'
 import { connect } from 'react-redux'
-import { createCard } from 'actions'
+import { createCardRequest } from 'actions'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
@@ -17,7 +17,7 @@ export default compose(
   connect(
     boardSelector,
     (dispatch, props) => ({
-      createCard: (text) => dispatch( createCard({ boardID: props.boardID, text }) )
+      createCard: (text) => dispatch( createCardRequest({ boardID: props.boardID, text }) )
     })
   ),
  

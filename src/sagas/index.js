@@ -1,8 +1,8 @@
 import { takeLatest, takeEvery } from 'redux-saga'
 import { call, fork, put } from 'redux-saga/effects'
-import Api from 'api'
-import { APP_LOAD_REQUEST } from 'constants/actionTypes'
-import { appLoadSuccess, appLoadFailure } from 'actions'
+import * as Api from 'api'
+import { APP_LOAD_REQUEST, CARD_CREATE_REQUEST } from 'constants/actionTypes'
+import * as actionCreators from 'actions'
 
 
 // ------------------------------------------------------------------------------ 
@@ -28,26 +28,26 @@ export function* fetchAppData() {
         return prev
       }, { cardsByBoard: {}, boards: [], dashboard: [] }
     )
-    yield put(appLoadSuccess( { ...payload, cards: cardData } ))
+    yield put(actionCreators.appLoadSuccess( { ...payload, cards: cardData } ))
   } catch (err) {
-    if (err.type !== 'MANUAL_CANCEL') yield put(appLoadFailure( err.type ))
+    if (err.type !== 'MANUAL_CANCEL') yield put(actionCreators.appLoadFailure( err.type ))
     console.error(err)
   }
 }
 
-// export function* putCardMove(action) {
-//   try {
+export function* createCard(action) {
+  try {
 
-//     const response = yield call(Api.moveCards, action.payload)
-//     yield put({ type: CARD_MOVE_SUCCESS, payload: response })
+    const response = yield call(Api.createCard, action.payload)
+    yield put( actionCreators.createCardSuccess(response) )
 
-//   } catch (err) {
+  } catch (err) {
 
-//     console.warn('ERROR: '+err.type, err.errorDump)
-//     yield put({ type: CARD_MOVE_FAILURE, payload: err.payload })
+    console.warn('ERROR: '+err.type, err.errorDump)
+    yield put( actionCreators.createCardFailure(err.payload) )
 
-//   }
-// }
+  }
+}
 
 // ------------------------------------------------------------------------------ 
 // Watchers
@@ -58,9 +58,9 @@ function* watchFetchAppData() {
   yield* takeLatest(APP_LOAD_REQUEST, fetchAppData)
 }
 
-// function* watchBoardCreate() {
-//   yield* takeEvery(CARD_MOVE_REQUEST, putCardMove)
-// }
+function* watchCreateCard() {
+  yield* takeEvery(CARD_CREATE_REQUEST, createCard)
+}
 
 // function* watchCardMove() {
 //   yield* takeEvery(CARD_MOVE_REQUEST, putCardMove)
@@ -69,7 +69,7 @@ function* watchFetchAppData() {
 
 export default function* root() {
   yield [
-    fork(watchFetchAppData)
-    // fork(watchCardMove)
+    fork(watchFetchAppData),
+    fork(watchCreateCard)
   ]
 }

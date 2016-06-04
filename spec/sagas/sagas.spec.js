@@ -1,17 +1,15 @@
 import * as actionTypes from 'constants/actionTypes'
-import Api from 'api'
-import { Map } from 'immutable'
 import { put, call } from 'redux-saga/effects'
-import { fetchAppData } from 'sagas'
+import * as Api from 'api'
+import { fetchAppData, createCard } from 'sagas'
 
 describe('Sagas::', function(){
 
-  let generator
-  let output
-  let dummyData
-
-
   describe('fetchAppData', function(){
+
+    let generator
+    let output
+    let dummyData
 
     it('yields parallel calls to api getBoards and getCards', function(){
       generator = fetchAppData()
@@ -36,14 +34,12 @@ describe('Sagas::', function(){
           ],
           [ { cardID: 'card1', text: 'one' }, { cardID: 'card2', text: 'two' } ]
         ]
-
         const expected = {
           cardsByBoard: { board1: ['card1'], board2: ['card2'] },
           boards: [ { boardID: 'board1', 'title': 'To Do' }, { 'boardID': 'board2', 'title': 'In Progress' }],
           dashboard: ['board1', 'board2'],
           cards: [{cardID: 'card1', 'text': 'one'}, {'cardID': 'card2', 'text': 'two'}]
         }
-
         output = generator.next(dummyData).value
 
         expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_SUCCESS, payload: expected }) )  
@@ -51,13 +47,15 @@ describe('Sagas::', function(){
 
       it('ignores (is done) on a MANUAL_CANCEL type error', function(){
         output = generator.throw({ type: 'MANUAL_CANCEL' })
+
         expect( output ).to.deep.equal({ value: undefined, done: true })
       })
 
       it('puts an APP_LOAD_FAILURE on thrown error', function(){
         dummyData = { type: 'some error' }
         output = generator.throw(dummyData).value
-        expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_FAILURE, payload: dummyData.type }) )  
+          
+        expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_FAILURE, payload: dummyData.type }) )
       })
 
     })
@@ -66,7 +64,13 @@ describe('Sagas::', function(){
 
   describe('createCard', function(){
 
-    it('yields a call to api.createCard')
+    it('yields a call to api.createCard', function(){
+
+      const generator = createCard({ payload: { cardID: '123' } })
+      const output = generator.next().value
+
+      expect( output ).to.deep.equal( call(Api.createCard, { cardID: '123' } ) )
+    })
 
     describe('then it either', function(){
       it('puts an CARD_CREATE_SUCCESS on success')

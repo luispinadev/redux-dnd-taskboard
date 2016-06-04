@@ -32,28 +32,48 @@ describe('Reducer:: cards', function(){
     expect(finalState).to.equal( Map({ card12: new Card({ cardID: 'card12', text: 'Lorem'}) }) )
   })
 
-  it('handles CARD_CREATE', function(){
-    initialState = Map()
-    action = actionCreators.createCard()
-    finalState = cards(initialState, action)
+  describe('card create', function(){
+    it('handles CARD_CREATE_REQUEST', function(){
+      initialState = Map()
+      action = actionCreators.createCardRequest()
+      finalState = cards(initialState, action)
 
-    expect(finalState.get(action.payload.cardID)).to.equal( new Card(action.payload) )
+      expect(finalState.get(action.payload.cardID)).to.equal( new Card({pending: true, ...action.payload}) )
+    })
+
+    it('handles CARD_CREATE_SUCCESS', function(){
+      initialState = Map({ '123': new Card({ cardID: '123', text: 'Lorem', pending: true }) })
+      action = actionCreators.createCardSuccess({ cardID: '123' })
+      finalState = cards(initialState, action)
+
+      expect(finalState.get('123').get('pending')).to.be.false
+    })
+
+    it('handles CARD_CREATE_FAILURE', function(){
+      initialState = Map({ 123: new Card({ cardID: '123'}) })
+      action = actionCreators.createCardFailure({ cardID: '123'})
+      finalState = cards(initialState, action)
+
+      expect(finalState).to.be.empty
+    })
+    
   })
 
+
   it('handles CARD_DELETE', function(){
-    initialState = Map({ cardID: new Card({ cardID: 'cardID'}) })
-    action = actionCreators.deleteCard({ cardID: 'cardID'})
+    initialState = Map({ 123: new Card({ cardID: '123'}) })
+    action = actionCreators.deleteCard({ cardID: '123'})
     finalState = cards(initialState, action)
 
     expect(finalState).to.be.empty
   })
 
   it('handles CARD_EDIT', function(){
-    initialState = Map({ cardID: new Card({ cardID: 'cardID', text: 'Lorem'}) })
-    action = actionCreators.editCard({ cardID: 'cardID', text: 'Ipsum'})
+    initialState = Map({ '123': new Card({ cardID: '123', text: 'Lorem'}) })
+    action = actionCreators.editCard({ cardID: '123', text: 'Ipsum'})
     finalState = cards(initialState, action)
 
-    expect(finalState.get('cardID').get('text')).to.equal('Ipsum')
+    expect(finalState.get('123').get('text')).to.equal('Ipsum')
   })
 
 

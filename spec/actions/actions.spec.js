@@ -1,6 +1,7 @@
 import * as actionCreators from 'actions'
-// import * as actionTypes from 'constants/actionTypes'
-// using actionTypes directly as strings to check proper declaration was mades
+
+// Note:
+// I'm using actionTypes directly as strings to also check for proper action type declaration
 
 describe('Action helpers::', function(){
   it('idGenHelper creates an unique id if payload does not contain one', function(){
@@ -27,6 +28,30 @@ describe('Actions::', function(){
   // ------------------------------------------------------------------------------
   // App
   // ------------------------------------------------------------------------------
+
+  describe('appLoadRequest', function(){
+    it('returns a APP_LOAD_REQUEST type action', function(){
+      action = actionCreators.appLoadRequest()
+      expected = { type: 'APP_LOAD_REQUEST', payload: undefined }
+      expect(action).to.deep.equal(expected)
+    })
+  })
+
+  describe('appLoadSuccess', function(){
+    it('returns a APP_LOAD_SUCCESS type action', function(){
+      action = actionCreators.appLoadSuccess()
+      expected = { type: 'APP_LOAD_SUCCESS', payload: undefined }
+      expect(action).to.deep.equal(expected)
+    })
+  })
+
+  describe('appLoadFailure', function(){
+    it('returns a APP_LOAD_FAILURE type action', function(){
+      action = actionCreators.appLoadFailure({ type: 'some error' })
+      expected = { type: 'APP_LOAD_FAILURE', payload: { type: 'some error' } }
+      expect(action).to.deep.equal(expected)
+    })
+  })
 
   describe('startDrag', function(){
     it('returns a APP_START_DRAG type action', function(){
@@ -76,13 +101,41 @@ describe('Actions::', function(){
   // Cards
   // ------------------------------------------------------------------------------
 
-  describe('createCard', function(){
+  
+  // Card create
+
+  describe('sync createCard (DEPRECATED)', function(){
     it('returns a CARD_CREATE type action', function(){
       action = actionCreators.createCard({ cardID: '123' })
       expected = { type: 'CARD_CREATE', payload: { cardID: '123' } }
       expect(action).to.deep.equal(expected)
     })
   })
+
+  describe('createCard', function(){
+
+    it('Request returns a CARD_CREATE_REQUEST type action', function(){
+      action = actionCreators.createCardRequest({ boardID: '123', text: 'hello', cardID: 'abc' })
+      expected = { type: 'CARD_CREATE_REQUEST', payload: { boardID: '123', text: 'hello', cardID: 'abc' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+    it('Success returns a CARD_CREATE_SUCCESS type action', function(){
+      action = actionCreators.createCardSuccess({ cardID: '123' })
+      expected = { type: 'CARD_CREATE_SUCCESS', payload: { cardID: '123' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+    it('Failure returns a CARD_CREATE_FAILURE type action', function(){
+      action = actionCreators.createCardFailure({ cardID: '123' })
+      expected = { type: 'CARD_CREATE_FAILURE', payload: { cardID: '123' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+  })
+
+
+  // Card delete
 
   describe('deleteCard', function(){
     it('returns a CARD_DELETE type action', function(){

@@ -47,14 +47,11 @@ export const setBoardTitle = (payload) => delayed().then( () => payload )
 export const deleteBoard = (payload) => delayed().then( () => payload )
 
 // Card
-export const createCard = (payload) => delayed().then( () => payload )
+export const createCard = payload => delayed().then( () => ({ 
+  cardID: payload.cardID 
+}) )
 export const deleteCard = (payload) => delayed().then( () => payload )
 export const editCard = (payload) => delayed().then( () => payload )
 export const moveCard = (payload) => delayed().then( () => payload )
-
-export default {
-  getBoards,
-  getCards
-}
 
 
