@@ -1,12 +1,14 @@
 ## Basic trello-like task board app with drag and drop interface. 
 
-The purpose is to explore some nifty libs from the react/redux ecosystem like recompose, redux, react-dnd, etc..   
-Used post-css / stylus / css-modules for styles.  
+The purpose of this project is to explore some nifty libs from the react/redux ecosystem (recompose, react-dnd, etc..) and practice writing some automated tests.
+Used post-css/stylus/css-modules for styles.  
+The async processes are handled by a redux-saga middleware, communicating with a dummy api.  
 
-The test stack is karma+mocha+chai+sinon+enzyme (note that the test coverage is far from complete, I've used this more as a playground, and this project is not meant for maintenance)
+The test stack is karma+mocha+chai+sinon+enzyme, and I'm using webpack as bundling tool.
 
 
 ### Running the project:
+Install modules with 'npm i', then:  
 
 * 'npm run start' will start dev server and webpack autobuild  
 * 'npm run test' will run karma test suite  
@@ -14,12 +16,10 @@ The test stack is karma+mocha+chai+sinon+enzyme (note that the test coverage is 
 
 
 ### ToDo:  
-* set drop area below last card to update hover index on board enter (edge case fix)
-* control for 'edit board title'
+* set drop area below last card to update hover index on board enter below existing cards (edge case bug fix)
+* add controls for 'edit board title' and 'delete board'
 * write remaining async processes in sagas (did init app loading only for now)
-* write some more tests / explore managing multi-HOC situations in tests
-* tests for sagas (easy-peazy!)
-* styles for create board / create card controls
+* write some more tests / explore testing nested HOC situations in tests.
 * css fine-tunings
 
 
