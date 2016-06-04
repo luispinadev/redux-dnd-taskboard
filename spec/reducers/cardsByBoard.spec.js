@@ -30,6 +30,7 @@ describe('Reducer:: cardsByBoard', function(){
     expect(finalState).to.equal( fromJS({ '123': [], abc: ['12']}) )
   })
 
+
   describe('card create', function(){
 
     it('handles CARD_CREATE_REQUEST', function(){
@@ -53,37 +54,57 @@ describe('Reducer:: cardsByBoard', function(){
 
   })
 
-  it('handles CARD_DELETE_SUCCESS', function(){
-    initialState = fromJS({ '123': ['cardID'] })
-    finalState = cardsByBoard( initialState, actionCreators.deleteCardSuccess({
-      boardID: '123',
-      cardID: 'cardID'
-    }))
+  describe('card delete', function(){
 
-    expect(finalState.get('123')).to.be.empty
+    it('handles CARD_DELETE_SUCCESS', function(){
+      initialState = fromJS({ '123': ['cardID'] })
+      finalState = cardsByBoard( initialState, actionCreators.deleteCardSuccess({
+        boardID: '123',
+        cardID: 'cardID'
+      }))
+
+      expect(finalState.get('123')).to.be.empty
+    })
+
   })
 
-  it('handles CARD_MOVE', function(){
-    initialState = fromJS({ abc: ['cardID'], xyz: [] })
-    finalState = cardsByBoard( initialState, actionCreators.moveCard({
-      origID: 'abc',
-      destID: 'xyz',
-      cardID: 'cardID'
-    }))
+  describe('card move', function(){
 
-    expect(finalState).to.equal( fromJS({ abc: [], xyz: ['cardID'] }) )
-  })
+    it('handles CARD_MOVE_REQUEST', function(){
+      initialState = fromJS({ abc: ['cardID'], xyz: [] })
+      finalState = cardsByBoard( initialState, actionCreators.moveCardRequest({
+        origID: 'abc',
+        destID: 'xyz',
+        cardID: 'cardID'
+      }))
 
-  it('handles CARD_MOVE to index', function(){
-    initialState = fromJS({ abc: ['cardID1'], xyz: ['cardID2', 'cardID3'] })
-    finalState = cardsByBoard( initialState, actionCreators.moveCard({
-      origID: 'abc',
-      destID: 'xyz',
-      cardID: 'cardID1',
-      index: 1
-    }))
+      expect(finalState).to.equal( fromJS({ abc: [], xyz: ['cardID'] }) )
+    })
 
-    expect(finalState).to.equal( fromJS({ abc: [], xyz: ['cardID2', 'cardID1', 'cardID3'] }) )
+    it('handles CARD_MOVE_REQUEST to index', function(){
+      initialState = fromJS({ abc: ['cardID1'], xyz: ['cardID2', 'cardID3'] })
+      finalState = cardsByBoard( initialState, actionCreators.moveCardRequest({
+        origID: 'abc',
+        destID: 'xyz',
+        cardID: 'cardID1',
+        index: 1
+      }))
+
+      expect(finalState).to.equal( fromJS({ abc: [], xyz: ['cardID2', 'cardID1', 'cardID3'] }) )
+    })
+
+    it('handles CARD_MOVE_FAILURE', function(){
+      initialState = fromJS({ abc: [], xyz: ['cardID1'] })
+      finalState = cardsByBoard( initialState, actionCreators.moveCardFailure({
+        origID: 'abc',
+        destID: 'xyz',
+        cardID: 'cardID1'
+      }))
+
+      expect(finalState).to.equal( fromJS({ abc: ['cardID1'], xyz: [] }) )
+    })
+
+
   })
 
   it('handles BOARD_CREATE', function(){

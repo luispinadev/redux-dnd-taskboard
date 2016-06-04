@@ -35,6 +35,7 @@ function getRandomMS() {
 }
 
 // Returns a Promise that resolves in random milliseconds
+// if no arg is provided, uses getRandomMS to define delay time
 const delayed = m => new Promise( res => setTimeout(res, m ? m : getRandomMS()) )
 
 // Returns a delayed identity Promise generator

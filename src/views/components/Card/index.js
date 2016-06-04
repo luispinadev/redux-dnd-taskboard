@@ -38,9 +38,15 @@ export default compose(
   }),
  
   branch(
+    props => !props.isEditing && props.pending,
+    comp => comp,
+    comp => dndCardHOC(comp)
+  ),
+
+  branch(
     props => props.isEditing,
     renderComponent(EditingCard),
-    comp => dndCardHOC(comp)
+    comp => comp
   ),
 
   pure,
