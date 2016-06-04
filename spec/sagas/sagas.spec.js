@@ -45,7 +45,7 @@ describe('Sagas::', function(){
         expect( output ).to.deep.equal( put({ type: actionTypes.APP_LOAD_SUCCESS, payload: expected }) )  
       })
 
-      it('ignores (is done) on a MANUAL_CANCEL type error', function(){
+      it('ignores (done) on MANUAL_CANCEL type error', function(){
         output = generator.throw({ type: 'MANUAL_CANCEL' })
 
         expect( output ).to.deep.equal({ value: undefined, done: true })
@@ -66,7 +66,6 @@ describe('Sagas::', function(){
 
     let generator
     let output
-    let dummyData
 
     it('yields a call to api.createCard', function(){
 
@@ -78,6 +77,7 @@ describe('Sagas::', function(){
 
     describe('then it either', function(){
 
+      // move generator to second step
       beforeEach(function() {
         generator = createCard({ payload: { cardID: '123' } })
         generator.next()
@@ -98,6 +98,17 @@ describe('Sagas::', function(){
     })
   })
 
+  describe('moveCard', function(){
+
+    it('yields a call to api.moveCard')
+
+    describe('then it either', function(){
+      it('puts an CARD_MOVE_SUCCESS on success')
+      it('puts an CARD_MOVE_FAILURE on thrown error')
+    })
+
+  })
+
   describe('deleteCard', function(){
 
     it('yields a call to api.deleteCard')
@@ -109,16 +120,6 @@ describe('Sagas::', function(){
   
   })
 
-  describe('moveCard', function(){
-
-    it('yields a call to api.moveCard')
-
-    describe('then it either', function(){
-      it('puts an CARD_MOVE_SUCCESS on success')
-      it('puts an CARD_MOVE_FAILURE on thrown error')
-    })
-
-  })
 
   describe('createBoard', function(){
 

@@ -59,14 +59,34 @@ describe('Reducer:: cards', function(){
     
   })
 
+  describe('card delete', function(){
 
-  it('handles CARD_DELETE', function(){
-    initialState = Map({ 123: new Card({ cardID: '123'}) })
-    action = actionCreators.deleteCard({ cardID: '123'})
-    finalState = cards(initialState, action)
+    it('handles CARD_DELETE_REQUEST', function(){
+      initialState = Map({ 123: new Card({ cardID: '123', pending: false}) })
+      action = actionCreators.deleteCardRequest({ cardID: '123'})
+      finalState = cards(initialState, action)
 
-    expect(finalState).to.be.empty
+      expect(finalState.get(action.payload.cardID)).to.equal( new Card({pending: true, ...action.payload}) )
+    })
+
+    it('handles CARD_DELETE_SUCCESS', function(){
+      initialState = Map({ 123: new Card({ cardID: '123'}) })
+      action = actionCreators.deleteCardSuccess({ cardID: '123'})
+      finalState = cards(initialState, action)
+
+      expect(finalState).to.be.empty
+    })
+
+    it('handles CARD_DELETE_FAILURE', function(){
+      initialState = Map({ 123: new Card({ cardID: '123', pending: true}) })
+      action = actionCreators.deleteCardFailure({ cardID: '123'})
+      finalState = cards(initialState, action)
+
+      expect(finalState.get(action.payload.cardID)).to.equal( new Card({pending: false, ...action.payload}) )
+    })
+    
   })
+
 
   it('handles CARD_EDIT', function(){
     initialState = Map({ '123': new Card({ cardID: '123', text: 'Lorem'}) })

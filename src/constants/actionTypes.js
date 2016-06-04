@@ -14,8 +14,8 @@ export const APP_END_DRAG = 'APP_END_DRAG'
 // ------------------------------------------------------------------------------
 
 // sync ops (soon to be deprecated)
-export const CARD_CREATE = 'CARD_CREATE'
-export const CARD_DELETE = 'CARD_DELETE'
+// export const CARD_CREATE = 'CARD_CREATE'
+// export const CARD_DELETE = 'CARD_DELETE'
 export const CARD_EDIT = 'CARD_EDIT'
 export const CARD_MOVE = 'CARD_MOVE'
 

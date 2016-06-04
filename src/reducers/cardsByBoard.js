@@ -5,7 +5,8 @@ import compose from 'recompose/compose' // Usualy I'd use lodash's implementatio
 import { 
   APP_LOAD_SUCCESS,
   CARD_CREATE_REQUEST, CARD_CREATE_FAILURE,
-  CARD_DELETE, CARD_MOVE, BOARD_CREATE, BOARD_DELETE } from 'constants/actionTypes'
+  CARD_DELETE_SUCCESS, 
+  CARD_MOVE, BOARD_CREATE, BOARD_DELETE } from 'constants/actionTypes'
 
 // ------------------------------------------------------------------------------
 // Composable helpers
@@ -40,7 +41,7 @@ export default handleActions({
     ),
   [CARD_CREATE_FAILURE]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
 
-  [CARD_DELETE]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
+  [CARD_DELETE_SUCCESS]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
 
   [CARD_MOVE]: (state, { payload }) =>
     payload.hasOwnProperty('index') ?

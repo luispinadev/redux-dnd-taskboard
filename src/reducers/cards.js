@@ -4,7 +4,8 @@ import { handleActions } from 'redux-actions'
 import { 
   APP_LOAD_SUCCESS, 
   CARD_CREATE_REQUEST, CARD_CREATE_SUCCESS, CARD_CREATE_FAILURE,
-  CARD_DELETE, CARD_EDIT } from 'constants/actionTypes'
+  CARD_DELETE_REQUEST, CARD_DELETE_SUCCESS, CARD_DELETE_FAILURE,
+  CARD_EDIT } from 'constants/actionTypes'
 import { Card } from 'records'
 
 export default handleActions({
@@ -15,7 +16,10 @@ export default handleActions({
   [CARD_CREATE_SUCCESS]: (state, { payload }) => state.updateIn([payload.cardID], c => c.set('pending', false)),
   [CARD_CREATE_FAILURE]: (state, { payload }) => state.delete(payload.cardID),
 
-  [CARD_DELETE]: (state, { payload }) => state.delete(payload.cardID),
+  [CARD_DELETE_REQUEST]: (state, { payload }) => state.updateIn([payload.cardID], c => c.set('pending', true)),
+  [CARD_DELETE_SUCCESS]: (state, { payload }) => state.delete(payload.cardID),
+  [CARD_DELETE_FAILURE]: (state, { payload }) => state.updateIn([payload.cardID], c => c.set('pending', false)),
+  
   [CARD_EDIT]: (state, { payload }) => state.updateIn([payload.cardID], c => c.set('text', payload.text))
 }, Map() )
 
