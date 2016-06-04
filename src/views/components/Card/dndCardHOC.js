@@ -17,9 +17,9 @@ const dragSource = {
   // },
 
   beginDrag(props) {
-    const { cardID, index } = props
+    const { cardID, index, text } = props
     props.startDrag({cardID, index}) // update store state
-    return { cardID, hoverIndex: index, previewIndex: index }
+    return { cardID, text, pending: true, hoverIndex: index, previewIndex: index }
   },
 
   isDragging(props, monitor) {

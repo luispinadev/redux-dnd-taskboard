@@ -104,13 +104,13 @@ describe('Actions::', function(){
   
   // Card create
 
-  describe('sync createCard (DEPRECATED)', function(){
-    it('returns a CARD_CREATE type action', function(){
-      action = actionCreators.createCard({ cardID: '123' })
-      expected = { type: 'CARD_CREATE', payload: { cardID: '123' } }
-      expect(action).to.deep.equal(expected)
-    })
-  })
+  // describe('sync createCard (DEPRECATED)', function(){
+  //   it('returns a CARD_CREATE type action', function(){
+  //     action = actionCreators.createCard({ cardID: '123' })
+  //     expected = { type: 'CARD_CREATE', payload: { cardID: '123' } }
+  //     expect(action).to.deep.equal(expected)
+  //   })
+  // })
 
   describe('createCard', function(){
 
@@ -134,15 +134,56 @@ describe('Actions::', function(){
 
   })
 
+  describe('moveCard', function(){
+
+    it('returns a CARD_MOVE type action', function(){
+      action = actionCreators.moveCard({ cardID: '123', 'boardID': 'bID' })
+      expected = { type: 'CARD_MOVE', payload: { cardID: '123', 'boardID': 'bID' } }
+      expect(action).to.deep.equal(expected)
+    })
+  
+    it('returns a CARD_MOVE_REQUEST type action', function(){
+      action = actionCreators.moveCardRequest({ cardID: '123', 'destID:': 'b1', origID: 'b2' })
+      expected = { type: 'CARD_MOVE_REQUEST', payload: { cardID: '123', 'destID:': 'b1', origID: 'b2' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+    it('returns a CARD_MOVE_SUCCESS type action', function(){
+      action = actionCreators.moveCardSuccess({ cardID: '123', 'destID:': 'b1', origID: 'b2' })
+      expected = { type: 'CARD_MOVE_SUCCESS', payload: { cardID: '123', 'destID:': 'b1', origID: 'b2' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+    it('returns a CARD_MOVE_FAILURE type action', function(){
+      action = actionCreators.moveCardFailure({ cardID: '123', 'destID:': 'b1', origID: 'b2' })
+      expected = { type: 'CARD_MOVE_FAILURE', payload: { cardID: '123', 'destID:': 'b1', origID: 'b2' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+  })
 
   // Card delete
 
   describe('deleteCard', function(){
-    it('returns a CARD_DELETE type action', function(){
-      action = actionCreators.deleteCard({ cardID: '123' })
-      expected = { type: 'CARD_DELETE', payload: { cardID: '123' } }
+    
+    it('returns a CARD_DELETE_REQUEST type action', function(){
+      action = actionCreators.deleteCardRequest({ cardID: '123' })
+      expected = { type: 'CARD_DELETE_REQUEST', payload: { cardID: '123' } }
       expect(action).to.deep.equal(expected)
     })
+
+    it('returns a CARD_DELETE_SUCCESS type action', function(){
+      action = actionCreators.deleteCardSuccess({ cardID: '123' })
+      expected = { type: 'CARD_DELETE_SUCCESS', payload: { cardID: '123' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+    it('returns a CARD_DELETE_FAILURE type action', function(){
+      action = actionCreators.deleteCardFailure({ cardID: '123' })
+      expected = { type: 'CARD_DELETE_FAILURE', payload: { cardID: '123' } }
+      expect(action).to.deep.equal(expected)
+    })
+
   })
 
   describe('editCard', function(){
@@ -153,13 +194,6 @@ describe('Actions::', function(){
     })
   })
 
-  describe('moveCard', function(){
-    it('returns a CARD_MOVE type action', function(){
-      action = actionCreators.moveCard({ cardID: '123', 'boardID': 'bID' })
-      expected = { type: 'CARD_MOVE', payload: { cardID: '123', 'boardID': 'bID' } }
-      expect(action).to.deep.equal(expected)
-    })
-  })
 
 })
 

@@ -1,7 +1,11 @@
 import { takeLatest, takeEvery } from 'redux-saga'
 import { call, fork, put } from 'redux-saga/effects'
 import * as Api from 'api'
-import { APP_LOAD_REQUEST, CARD_CREATE_REQUEST } from 'constants/actionTypes'
+import { 
+  APP_LOAD_REQUEST,
+  CARD_CREATE_REQUEST,
+  CARD_DELETE_REQUEST
+} from 'constants/actionTypes'
 import * as actionCreators from 'actions'
 
 
@@ -30,8 +34,10 @@ export function* fetchAppData() {
     )
     yield put(actionCreators.appLoadSuccess( { ...payload, cards: cardData } ))
   } catch (err) {
-    if (err.type !== 'MANUAL_CANCEL') yield put(actionCreators.appLoadFailure( err.type ))
-    console.error(err)
+    if (err.type !== 'MANUAL_CANCEL') {
+      console.warn(err)
+      yield put(actionCreators.appLoadFailure( err.type ))
+    }
   }
 }
 
@@ -49,6 +55,20 @@ export function* createCard(action) {
   }
 }
 
+export function* deleteCard(action) {
+  try {
+
+    const response = yield call(Api.deleteCard, action.payload)
+    yield put( actionCreators.deleteCardSuccess(response) )
+
+  } catch (err) {
+
+    console.warn('ERROR: '+action)
+    yield put( actionCreators.deleteCardFailure(err) )
+
+  }
+}
+
 // ------------------------------------------------------------------------------ 
 // Watchers
 // ------------------------------------------------------------------------------ 
@@ -62,6 +82,10 @@ function* watchCreateCard() {
   yield* takeEvery(CARD_CREATE_REQUEST, createCard)
 }
 
+function* watchDeleteCard() {
+  yield* takeEvery(CARD_DELETE_REQUEST, deleteCard)
+}
+
 // function* watchCardMove() {
 //   yield* takeEvery(CARD_MOVE_REQUEST, putCardMove)
 // }
@@ -70,6 +94,7 @@ function* watchCreateCard() {
 export default function* root() {
   yield [
     fork(watchFetchAppData),
-    fork(watchCreateCard)
+    fork(watchCreateCard),
+    fork(watchDeleteCard)
   ]
 }

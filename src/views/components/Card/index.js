@@ -1,26 +1,13 @@
 import { PropTypes } from 'react'
 import { compose, branch, pure, setPropTypes, setDisplayName, withState, mapProps, withHandlers, renderComponent } from 'recompose'
-import { connect } from 'react-redux'
-import { editCard } from 'actions'
 
 import Card from './Card'
-import {cardSelector} from 'selectors'
 import EditingCard from './EditingCard'
 import dndCardHOC from './dndCardHOC'
 
 
 export default compose(
   setDisplayName('Card'),
-
-  connect(
-    cardSelector,
-    (dispatch, props) => ({
-      setText: (text) => {
-        if (props.isEditing) props.editDone()
-        dispatch( editCard({ cardID: props.cardID, text }) )
-      }
-    })
-  ),
 
   withState('isEditing', 'setEditStatus', false),
   withState('inputText', 'setInputText', props => props.text),
@@ -38,7 +25,7 @@ export default compose(
       // focus input ?
     },
     onSave: props => () => {
-      props.setText(props.inputText)
+      props.editCard({ cardID: props.cardID, text: props.inputText })
       props.stopEdit()
     },
     onCancel: props => () => {
@@ -64,6 +51,9 @@ export default compose(
     index: PropTypes.number,
     startDrag: PropTypes.func,
     endDrag: PropTypes.func,
+    text: PropTypes.string.isRequired,
+    pending: PropTypes.bool.isRequired,
+    setText: PropTypes.func, // .isRequired
     // Injected by mapProps
     startEdit: PropTypes.func, // .isRequired,
     stopEdit: PropTypes.func, // .isRequired,
@@ -76,9 +66,6 @@ export default compose(
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onDelete: PropTypes.func, // .isRequired,
-    // Injected by Redux
-    text: PropTypes.string.isRequired,
-    setText: PropTypes.func, // .isRequired
   })
 
 )(Card)

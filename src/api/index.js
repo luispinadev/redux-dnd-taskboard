@@ -26,32 +26,37 @@ const dummyData = {
 
 
 // ------------------------------------------------------------------------------
-// Util: return random number between 50 and 500 (used as delay millisecs in delayed promise generator)
+// Utils
+// ------------------------------------------------------------------------------
+
+// Generates random number between 50 and 500 (used as delay millisecs in delayed promise generator)
 function getRandomMS() {
   return Math.floor(Math.random() * (500 - 50 + 1)) + 50
 }
-// Util: returns a Promise that resolves in m millisecs
-const delayed = () => new Promise( res => setTimeout(res, getRandomMS()) )
+
+// Returns a Promise that resolves in random milliseconds
+const delayed = m => new Promise( res => setTimeout(res, m ? m : getRandomMS()) )
+
+// Returns a delayed identity Promise generator
+const genDelayedIdentity = m => payload => delayed(m).then( () => payload )
 
 // ------------------------------------------------------------------------------
 // API
 // ------------------------------------------------------------------------------
 
 // App initial load
-export const getBoards = () => delayed().then( () => Object.assign([], dummyData.boards) ).catch( err => ({ error: err }) )
-export const getCards = () => delayed().then( () => Object.assign([], dummyData.cards) ).catch( err => ({ error: err }) )
+export const getBoards = () => delayed().then( () => Object.assign([], dummyData.boards) ).catch( err => ({ error: err, type: 'getBoards' }) )
+export const getCards = () => delayed().then( () => Object.assign([], dummyData.cards) ).catch( err => ({ error: err, type: 'getCards' }) )
 
 // Board
-export const createBoard = (payload) => delayed().then( () => payload )
-export const setBoardTitle = (payload) => delayed().then( () => payload )
-export const deleteBoard = (payload) => delayed().then( () => payload )
+export const createBoard = genDelayedIdentity()
+export const setBoardTitle = genDelayedIdentity()
+export const deleteBoard = genDelayedIdentity()
 
 // Card
-export const createCard = payload => delayed().then( () => ({ 
-  cardID: payload.cardID 
-}) )
-export const deleteCard = (payload) => delayed().then( () => payload )
-export const editCard = (payload) => delayed().then( () => payload )
-export const moveCard = (payload) => delayed().then( () => payload )
+export const createCard = genDelayedIdentity()
+export const deleteCard = genDelayedIdentity()
+export const editCard = genDelayedIdentity()
+export const moveCard = genDelayedIdentity()
 
 
