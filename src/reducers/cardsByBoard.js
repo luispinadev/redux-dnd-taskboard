@@ -13,7 +13,7 @@ import {
 
 // if the dataset were large, we could build something like this for a lazy filtering api (or 'skip'):
 //  state.updateIn([origID], l => Seq.of(...l).filter( id => id !== cardID ).toList() )
-const removeCard = ({ cardID, origID, state, ...rest }) => ({
+const removeCardFromOrigin = ({ cardID, origID, state, ...rest }) => ({
   state: state.updateIn([origID], l => l.delete(l.indexOf(cardID)) ), cardID, origID, ...rest 
 })
 const addCardToBottom = ({cardID, destID, state, ...rest}) => ({
@@ -22,7 +22,9 @@ const addCardToBottom = ({cardID, destID, state, ...rest}) => ({
 const addCardToIndex = ({cardID, destID, index, state, ...rest}) => ({
   state: state.updateIn([destID], l => l.insert(index, cardID)), cardID, destID, index, ...rest
 })
-
+const deleteCardFromBoard = ({ cardID, boardID, state, ...rest }) => ({
+  state: state.updateIn([boardID], l => l.delete(l.indexOf(cardID)) ), cardID, boardID, ...rest 
+})
 
 // ------------------------------------------------------------------------------
 // Reducer
@@ -36,16 +38,14 @@ export default handleActions({
       payload.hasOwnProperty('index') ? 
         l.insert(payload.index, payload.cardID) : l.unshift(payload.cardID)
     ),
-  [CARD_CREATE_FAILURE]: (state, { payload }) =>
-    state.updateIn([payload.boardID], l => l.delete(l.indexOf(payload.cardID)) ),
+  [CARD_CREATE_FAILURE]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
 
-  [CARD_DELETE]: (state, { payload }) =>
-    state.updateIn([payload.boardID], l => l.delete(l.indexOf(payload.cardID)) ),
+  [CARD_DELETE]: (state, { payload }) => deleteCardFromBoard({ state, ...payload }).state,
 
   [CARD_MOVE]: (state, { payload }) =>
     payload.hasOwnProperty('index') ?
-      compose(addCardToIndex, removeCard)({ state, ...payload }).state :
-      compose(addCardToBottom, removeCard)({ state, ...payload }).state
+      compose(addCardToIndex, removeCardFromOrigin)({ state, ...payload }).state :
+      compose(addCardToBottom, removeCardFromOrigin)({ state, ...payload }).state
   ,
   [BOARD_CREATE]: (state, { payload }) => state.set(payload.boardID, List() ),
   [BOARD_DELETE]: (state, { payload }) => state.delete(payload.boardID)

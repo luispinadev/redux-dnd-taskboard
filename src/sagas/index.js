@@ -43,8 +43,8 @@ export function* createCard(action) {
 
   } catch (err) {
 
-    console.warn('ERROR: '+err.type, err.errorDump)
-    yield put( actionCreators.createCardFailure(err.payload) )
+    console.warn('ERROR: '+action)
+    yield put( actionCreators.createCardFailure(err) )
 
   }
 }

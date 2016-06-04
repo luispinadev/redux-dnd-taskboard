@@ -5,7 +5,7 @@ import { fetchAppData, createCard } from 'sagas'
 
 describe('Sagas::', function(){
 
-  describe('fetchAppData', function(){
+  describe('handles APP_LOAD_REQUEST', function(){
 
     let generator
     let output
@@ -62,19 +62,39 @@ describe('Sagas::', function(){
 
   })
 
-  describe('createCard', function(){
+  describe('handles CARD_CREATE_REQUEST', function(){
+
+    let generator
+    let output
+    let dummyData
 
     it('yields a call to api.createCard', function(){
 
-      const generator = createCard({ payload: { cardID: '123' } })
-      const output = generator.next().value
+      generator = createCard({ payload: { cardID: '123' } })
+      output = generator.next().value
 
       expect( output ).to.deep.equal( call(Api.createCard, { cardID: '123' } ) )
     })
 
     describe('then it either', function(){
-      it('puts an CARD_CREATE_SUCCESS on success')
-      it('puts an CARD_CREATE_FAILURE on thrown error')
+
+      beforeEach(function() {
+        generator = createCard({ payload: { cardID: '123' } })
+        generator.next()
+      })
+
+      it('puts a CARD_CREATE_SUCCESS', function(){
+        output = generator.next({ cardID: '123' }).value
+
+        expect( output ).to.deep.equal( put({ type: actionTypes.CARD_CREATE_SUCCESS, payload: { cardID: '123' } }) )  
+      })
+
+      it('puts a CARD_CREATE_FAILURE on thrown error', function(){
+        output = generator.throw({ cardID: '123' }).value
+          
+        expect( output ).to.deep.equal( put({ type: actionTypes.CARD_CREATE_FAILURE, payload: { cardID: '123' } }) )
+      })
+
     })
   })
 
