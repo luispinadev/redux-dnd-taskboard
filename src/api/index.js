@@ -35,10 +35,10 @@ function getRandomMS() {
 }
 
 // Returns a Promise that resolves in random milliseconds
-const delayed = () => new Promise( res => setTimeout(res, getRandomMS()) )
+const delayed = m => new Promise( res => setTimeout(res, m ? m : getRandomMS()) )
 
-// Returns a delayed identity Promise
-const delayedIdentity = payload => delayed().then( () => payload )
+// Returns a delayed identity Promise generator
+const genDelayedIdentity = m => payload => delayed(m).then( () => payload )
 
 // ------------------------------------------------------------------------------
 // API
@@ -49,14 +49,14 @@ export const getBoards = () => delayed().then( () => Object.assign([], dummyData
 export const getCards = () => delayed().then( () => Object.assign([], dummyData.cards) ).catch( err => ({ error: err, type: 'getCards' }) )
 
 // Board
-export const createBoard = delayedIdentity
-export const setBoardTitle = delayedIdentity
-export const deleteBoard = delayedIdentity
+export const createBoard = genDelayedIdentity()
+export const setBoardTitle = genDelayedIdentity()
+export const deleteBoard = genDelayedIdentity()
 
 // Card
-export const createCard = delayedIdentity
-export const deleteCard = delayedIdentity
-export const editCard = delayedIdentity
-export const moveCard = delayedIdentity
+export const createCard = genDelayedIdentity()
+export const deleteCard = genDelayedIdentity()
+export const editCard = genDelayedIdentity()
+export const moveCard = genDelayedIdentity()
 
 

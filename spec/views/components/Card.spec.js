@@ -13,6 +13,7 @@ describe('Components:: Card', function(){
     cardID: 'ID',
     deleteCard: f => f,
     text: 'Lorem to the ipsum',
+    pending: false,
     setText: f => f,
     startEdit: f => f,
     stopEdit: f => f,
@@ -49,6 +50,8 @@ describe('Components:: Card', function(){
       const wrapper = shallow(<Card {...props} />)
       expect( wrapper.find('.'+styles.controlsBlock) ).to.have.length(1)
     })
+
+    it('hides controls block when pending == true')
 
     it('"onDelete" is called when delete button is clicked', function(){
       const handler = sinon.spy()

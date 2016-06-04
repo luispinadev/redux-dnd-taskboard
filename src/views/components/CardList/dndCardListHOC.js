@@ -89,7 +89,7 @@ export default (WrappedComponent) =>
             hoverIndex !== dragIndex + 1 &&
             hoverIndex !== dragIndex
           )
-        ) this.setState({ cards: cards.insert(hoverIndex, hoverData.get('cardID') ) })
+        ) this.setState({ cards: cards.insert(hoverIndex, hoverData ) })
       }
 
     }
