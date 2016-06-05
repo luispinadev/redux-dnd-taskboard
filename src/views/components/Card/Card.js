@@ -9,7 +9,7 @@ export default ({ text, onEdit, onDelete, pending }) => {
         { pending ? 
 
           <div className={styles.controlsBlock}>
-            <i className="fa fa-spinner" />
+            <i className={`fa fa-spinner ${styles.icon}`} />
           </div>
 
           :

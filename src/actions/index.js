@@ -43,12 +43,6 @@ export const setBoardTitle = createAction(actionTypes.BOARD_SET_TITLE)
 // Card
 // ------------------------------------------------------------------------------
 
-// Synchronous actions (will be deprecated once async ops are implemented)
-// export const createCard = createAction(actionTypes.CARD_CREATE, idGenHelper('cardID'))
-// export const deleteCard = createAction(actionTypes.CARD_DELETE)
-// export const moveCard = createAction(actionTypes.CARD_MOVE)
-export const editCard = createAction(actionTypes.CARD_EDIT)
-
 // Card creation
 export const createCardRequest = createAction(actionTypes.CARD_CREATE_REQUEST, idGenHelper('cardID'))
 export const createCardSuccess = createAction(actionTypes.CARD_CREATE_SUCCESS)
@@ -65,8 +59,8 @@ export const moveCardSuccess = createAction(actionTypes.CARD_MOVE_SUCCESS)
 export const moveCardFailure = createAction(actionTypes.CARD_MOVE_FAILURE)
 
 // Card edit
-export const cardEditRequest = createAction(actionTypes.CARD_EDIT_REQUEST)
-export const cardEditSuccess = createAction(actionTypes.CARD_EDIT_SUCCESS)
-export const cardEditFailure = createAction(actionTypes.CARD_EDIT_FAILURE)
+export const editCardRequest = createAction(actionTypes.CARD_EDIT_REQUEST)
+export const editCardSuccess = createAction(actionTypes.CARD_EDIT_SUCCESS)
+export const editCardFailure = createAction(actionTypes.CARD_EDIT_FAILURE)
 
 

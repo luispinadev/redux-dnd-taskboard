@@ -2,7 +2,7 @@ import { PropTypes } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { compose, pure, setPropTypes, setDisplayName } from 'recompose'
 import { connect } from 'react-redux'
-import { deleteCardRequest, moveCardRequest, editCard, startDrag, endDrag } from 'actions'
+import { deleteCardRequest, moveCardRequest, editCardRequest, startDrag, endDrag } from 'actions'
 
 import CardList from './CardList'
 import {cardListSelector} from 'selectors'
@@ -16,7 +16,7 @@ export default compose(
     cardListSelector,
     (dispatch, props) => ({
       editCard: ({cardID, text}) => {
-        dispatch( editCard({ cardID, text }) )
+        dispatch( editCardRequest({ cardID, text }) )
       },
       deleteCard: (cardID) => {
         dispatch( deleteCardRequest({ cardID, boardID: props.boardID }) )
