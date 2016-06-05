@@ -33,10 +33,10 @@ describe('Components:: App', function(){
     expect( wrapper.find(Board) ).to.have.length(2)
   })
 
-  it('renders a CreateBoard control', function(){
-    const wrapper = shallow(<App dashboard={List()} />)
-    expect( wrapper.find(CreateBoardControl) ).to.have.length(1)
-  })
+  // it('renders a CreateBoard control', function(){
+  //   const wrapper = shallow(<App dashboard={List()} />)
+  //   expect( wrapper.find(CreateBoardControl) ).to.have.length(1)
+  // })
   // it('renders an "app loading" message if appLoading')
     
 

@@ -14,7 +14,7 @@ export default ({ dashboard, isLoading }) =>
     
     :
     <div>
-      <CreateBoardControl />
+      { /* <CreateBoardControl /> */ }
       <div className={styles.boardsContainer} >
         { dashboard.map( (boardID, i) => <Board key={i} boardID={boardID} />) }
       </div>
