@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './App.styl'
 import Board from 'views/components/Board'
-import CreateBoardControl from 'views/components/CreateBoardControl'
+// import CreateBoardControl from 'views/components/CreateBoardControl'
 
 export default ({ dashboard, isLoading }) =>
 <div className={styles.container} >
