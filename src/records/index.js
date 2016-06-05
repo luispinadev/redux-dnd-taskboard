@@ -13,7 +13,8 @@ export const Board = new Record({
 export const Card = new Record({
   cardID: undefined,
   text: '',
-  pending: false
+  pending: false,
+  cachedText: undefined
   // date created
   // color
 })

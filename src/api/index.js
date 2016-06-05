@@ -5,7 +5,7 @@
 // ------------------------------------------------------------------------------
 
 /*
-  In order to showcase ho redux-saga makes it easy to handle non trivial async processes,
+  In order to showcase how redux-saga makes it easy to handle non trivial async processes,
   I've broken the data required by the app for the initial loading into two calls.
   One will retrieve the boards data, the other one will retrieve the cards data,
   following these models:
@@ -57,7 +57,7 @@ export const deleteBoard = genDelayedIdentity()
 // Card
 export const createCard = genDelayedIdentity()
 export const deleteCard = genDelayedIdentity()
-export const editCard = genDelayedIdentity()
 export const moveCard = genDelayedIdentity()
+export const editCard = genDelayedIdentity()
 
 

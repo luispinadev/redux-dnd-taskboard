@@ -115,14 +115,38 @@ describe('Reducer:: cards', function(){
     
   })
 
+  describe('card edit', function(){
 
-  it('handles CARD_EDIT', function(){
-    initialState = Map({ '123': new Card({ cardID: '123', text: 'Lorem'}) })
-    action = actionCreators.editCard({ cardID: '123', text: 'Ipsum'})
-    finalState = cards(initialState, action)
+    it('handles CARD_EDIT_REQUEST', function(){
+      initialState = Map({ '123': new Card({ cardID: '123', text: 'Lorem'}) })
+      action = actionCreators.editCardRequest({ cardID: '123', text: 'Ipsum'})
+      finalState = cards(initialState, action)
 
-    expect(finalState.get('123').get('text')).to.equal('Ipsum')
+      expect(finalState.get('123')).to.equal(
+        new Card({ cardID: '123', cachedText: 'Lorem', text: 'Ipsum', pending: true})
+      )
+    })
+
+    it('handles CARD_EDIT_SUCCESS', function(){
+      initialState = Map({ '123': new Card({ cardID: '123', cachedText: 'Lorem', text: 'Ipsum', pending: true}) })
+      action = actionCreators.editCardSuccess({ cardID: '123', text: 'Ipsum'})
+      finalState = cards(initialState, action)
+
+      expect(finalState.get('123')).to.equal(
+        new Card({ cardID: '123', cachedText: undefined, text: 'Ipsum', pending: false})
+      )
+    })
+
+    it('handles CARD_EDIT_FAILURE', function(){
+      initialState = Map({ '123': new Card({ cardID: '123', cachedText: 'Lorem', text: 'Ipsum', pending: true}) })
+      action = actionCreators.editCardFailure({ cardID: '123', text: 'Ipsum'})
+      finalState = cards(initialState, action)
+
+      expect(finalState.get('123')).to.equal(
+        new Card({ cardID: '123', cachedText: undefined, text: 'Lorem', pending: false})
+      )
+    })
+
   })
-
 
 })

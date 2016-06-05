@@ -170,11 +170,25 @@ describe('Actions::', function(){
   })
 
   describe('editCard', function(){
-    it('returns a CARD_EDIT type action', function(){
-      action = actionCreators.editCard({ cardID: '123', 'text': 'new text' })
-      expected = { type: 'CARD_EDIT', payload: { cardID: '123', text: 'new text' } }
+    
+    it('returns a CARD_EDIT_REQUEST type action', function(){
+      action = actionCreators.editCardRequest({ cardID: '123', 'text': 'new text' })
+      expected = { type: 'CARD_EDIT_REQUEST', payload: { cardID: '123', text: 'new text' } }
       expect(action).to.deep.equal(expected)
     })
+
+    it('returns a CARD_EDIT_SUCCESS type action', function(){
+      action = actionCreators.editCardSuccess({ cardID: '123', 'text': 'new text' })
+      expected = { type: 'CARD_EDIT_SUCCESS', payload: { cardID: '123', text: 'new text' } }
+      expect(action).to.deep.equal(expected)
+    })
+
+    it('returns a CARD_EDIT_FAILURE type action', function(){
+      action = actionCreators.editCardFailure({ cardID: '123', 'text': 'new text' })
+      expected = { type: 'CARD_EDIT_FAILURE', payload: { cardID: '123', text: 'new text' } }
+      expect(action).to.deep.equal(expected)
+    })
+
   })
 
 

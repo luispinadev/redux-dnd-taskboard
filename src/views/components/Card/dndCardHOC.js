@@ -19,6 +19,8 @@ const dragSource = {
   beginDrag(props) {
     const { cardID, index, text } = props
     props.startDrag({cardID, index}) // update store state
+
+    // TD: Note: maybe move text/pending to app state instead of here?
     return { cardID, text, pending: false, hoverIndex: index, previewIndex: index }
   },
 

@@ -2,7 +2,7 @@ import { takeLatest, takeEvery } from 'redux-saga'
 import { call, fork, put } from 'redux-saga/effects'
 import * as Api from 'api'
 import { 
-  APP_LOAD_REQUEST, CARD_CREATE_REQUEST, CARD_DELETE_REQUEST, CARD_MOVE_REQUEST
+  APP_LOAD_REQUEST, CARD_CREATE_REQUEST, CARD_DELETE_REQUEST, CARD_MOVE_REQUEST, CARD_EDIT_REQUEST
 } from 'constants/actionTypes'
 import * as actionCreators from 'actions'
 
@@ -68,6 +68,10 @@ export function* moveCard(action) {
   yield identityPutRoutine(action, Api.moveCard, actionCreators.moveCardSuccess, actionCreators.moveCardFailure)
 }
 
+export function* editCard(action) {
+  yield identityPutRoutine(action, Api.editCard, actionCreators.editCardSuccess, actionCreators.editCardFailure)
+}
+
 // ------------------------------------------------------------------------------ 
 // Watchers
 // ------------------------------------------------------------------------------ 
@@ -91,12 +95,17 @@ function* watchMoveCard() {
   yield* takeEvery(CARD_MOVE_REQUEST, moveCard)
 }
 
+function* watchEditCard() {
+  yield* takeEvery(CARD_EDIT_REQUEST, editCard)
+}
+
 
 export default function* root() {
   yield [
     fork(watchFetchAppData),
     fork(watchCreateCard),
     fork(watchDeleteCard),
-    fork(watchMoveCard)
+    fork(watchMoveCard),
+    fork(watchEditCard)
   ]
 }

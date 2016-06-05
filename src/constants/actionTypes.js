@@ -17,7 +17,7 @@ export const APP_END_DRAG = 'APP_END_DRAG'
 // export const CARD_CREATE = 'CARD_CREATE'
 // export const CARD_DELETE = 'CARD_DELETE'
 // export const CARD_MOVE = 'CARD_MOVE'
-export const CARD_EDIT = 'CARD_EDIT'
+// export const CARD_EDIT = 'CARD_EDIT'
 
 export const CARD_CREATE_REQUEST = 'CARD_CREATE_REQUEST'
 export const CARD_CREATE_SUCCESS = 'CARD_CREATE_SUCCESS'
@@ -29,13 +29,13 @@ export const CARD_DELETE_SUCCESS = 'CARD_DELETE_SUCCESS'
 export const CARD_DELETE_FAILURE = 'CARD_DELETE_FAILURE'
 
 
-export const CARD_EDIT_REQUEST = 'CARD_EDIT_REQUEST'
-export const CARD_EDIT_SUCCESS = 'CARD_EDIT_SUCCESS'
-export const CARD_EDIT_FAILURE = 'CARD_EDIT_FAILURE'
-
 export const CARD_MOVE_REQUEST = 'CARD_MOVE_REQUEST'
 export const CARD_MOVE_SUCCESS = 'CARD_MOVE_SUCCESS'
 export const CARD_MOVE_FAILURE = 'CARD_MOVE_FAILURE'
+
+export const CARD_EDIT_REQUEST = 'CARD_EDIT_REQUEST'
+export const CARD_EDIT_SUCCESS = 'CARD_EDIT_SUCCESS'
+export const CARD_EDIT_FAILURE = 'CARD_EDIT_FAILURE'
 
 
 // ------------------------------------------------------------------------------
