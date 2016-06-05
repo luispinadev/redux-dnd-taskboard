@@ -6,6 +6,8 @@ import ControlledInput from './ControlledInput'
 export default compose(
   setDisplayName('ControlledInput'),  
 
+  pure,
+
   withState('value', 'setVal', (props) => props.initVal),
   
   mapProps(({ setVal, ...rest }) => ({
@@ -19,9 +21,7 @@ export default compose(
       props.setVal(newVal)
       props.changeHandler(newVal)
     }
-  }),
- 
-  pure,
+  }), 
 
   defaultProps({
     initVal: '',

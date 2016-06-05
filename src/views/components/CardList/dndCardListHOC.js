@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { compose, withState, mapProps } from 'recompose'
+import { pure, compose, withState, mapProps, setDisplayName } from 'recompose'
 import throttle from 'lodash.throttle'
 import { fromJS, Map } from 'immutable'
 
@@ -47,6 +47,9 @@ const dropTarget = {
 // The 'div' wrapper is required for react-dnd to work
 export default (WrappedComponent) =>
   compose(
+    setDisplayName('dndCardListHOC'),
+
+    pure,
 
     withState('hoverData', 'setHoverData', Map()),
 
@@ -91,7 +94,11 @@ export default (WrappedComponent) =>
           )
         ) this.setState({ cards: cards.insert(hoverIndex, hoverData ) })
       }
+    }
 
+    shouldComponentUpdate(nextProps, nextState){
+      const hoverData = this.props.hoverData
+      return (nextState.cards !== this.state.cards || nextProps.hoverData.get('previewIndex') !== hoverData.get('previewIndex'))
     }
 
     render(){

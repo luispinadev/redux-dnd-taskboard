@@ -14,12 +14,10 @@ The test stack is karma+mocha+chai+sinon+enzyme (note that the test coverage is 
 
 
 ### ToDo:  
-* set drop area below last card to update hover index on board enter (edge case fix)
+* set drop area below last card to update hover index on board enter (edge case bug fix)
 * control for 'edit board title'
-* write remaining async processes in sagas (did init app loading only for now)
+* write remaining async processes in sagas (Board: create / delete / title edit, with blocking sagas)
 * write some more tests / explore managing multi-HOC situations in tests
-* tests for sagas (easy-peazy!)
-* styles for create board / create card controls
 * css fine-tunings
 
 

@@ -1,6 +1,6 @@
 import { PropTypes } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { compose, pure, setPropTypes, setDisplayName } from 'recompose'
+import { compose, onlyUpdateForKeys, setPropTypes, setDisplayName } from 'recompose'
 import { connect } from 'react-redux'
 import { deleteCardRequest, moveCardRequest, editCardRequest, startDrag, endDrag } from 'actions'
 
@@ -11,6 +11,8 @@ import dndCardListHOC from './dndCardListHOC'
 export default compose(
 
   setDisplayName('CardList'),
+
+  onlyUpdateForKeys(['cards']),
 
   connect(
     cardListSelector,
@@ -36,9 +38,7 @@ export default compose(
       }
     })
   ),
- 
-  pure,
- 
+
   dndCardListHOC,
 
   setPropTypes({

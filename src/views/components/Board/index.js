@@ -12,6 +12,8 @@ import {boardSelector} from 'selectors'
 export default compose(
   DragDropContext(HTML5Backend),
 
+  pure,
+
   setDisplayName('Board'),
   
   connect(
@@ -21,7 +23,6 @@ export default compose(
     })
   ),
  
-  pure,
 
   setPropTypes({
     boardID: PropTypes.string.isRequired,
