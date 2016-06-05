@@ -12,9 +12,10 @@ import 'shared-styles/global.styl' // Setup global styles
 export default compose(
   setDisplayName('App'),
 
+  pure,
+
   connect( appSelector, { appLoadRequest } ),
 
-  pure,
   
   setPropTypes({
     // Injected by Redux

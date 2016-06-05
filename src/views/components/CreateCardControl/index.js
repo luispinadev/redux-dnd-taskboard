@@ -7,6 +7,8 @@ export default compose(
 
   setDisplayName('CreateCardControl'),
 
+  pure,
+
   withState('isCreating', 'setIsCreating', false),
   withState('inputText', 'setInputText', ''),
 
@@ -28,8 +30,6 @@ export default compose(
       props.setInputText('')
     }
   }),
- 
-  pure,
 
   setPropTypes({
     createCard: PropTypes.func.isRequired,

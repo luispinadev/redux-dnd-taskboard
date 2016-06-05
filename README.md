@@ -16,10 +16,10 @@ Install modules with 'npm i', then:
 
 
 ### ToDo:  
-* set drop area below last card to update hover index on board enter below existing cards (edge case bug fix)
-* add controls for 'edit board title' and 'delete board'
-* write remaining async processes in sagas (did init app loading only for now)
-* write some more tests / explore testing nested HOC situations in tests.
+* set drop area below last card to update hover index on board enter (edge case bug fix)
+* control for 'edit board title'
+* write remaining async processes in sagas (Board: create / delete / title edit, with blocking sagas)
+* write some more tests / explore managing multi-HOC situations in tests
 * css fine-tunings
 
 

@@ -9,6 +9,8 @@ import dndCardHOC from './dndCardHOC'
 export default compose(
   setDisplayName('Card'),
 
+  pure,
+
   withState('isEditing', 'setEditStatus', false),
   withState('inputText', 'setInputText', props => props.text),
   
@@ -48,8 +50,6 @@ export default compose(
     renderComponent(EditingCard),
     comp => comp
   ),
-
-  pure,
 
   setPropTypes({
     cardID: PropTypes.string, // .isRequired,
